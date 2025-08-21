@@ -129,3 +129,20 @@ class ErrorsiaVirusKillerApp:
 
         self.handler.setFormatter(self.formatter)
         self.logger.addHandler(self.handler)
+
+    def handle_log_config(self):
+        ask_enable_log = self.logic.read_log_config()
+        match ask_enable_log:
+            case 1:
+                self.build_Log = True
+            case 0:
+                self.build_Log = False
+            case -1:
+                self.build_Log = tk.messagebox.askokcancel(
+                    title="Save log or not",
+                    message="Do you want to save log?\n你想要保存日志吗?"
+                )
+            case -2:
+                self.build_Log = False
+                # tk.messagebox.showerror("PermissionError")
+        self.logic.write_log_config(self.build_Log)
