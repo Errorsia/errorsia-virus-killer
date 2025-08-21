@@ -56,3 +56,65 @@ import xyzvk_logic as logic_module
 
 
 # import win11toast
+
+
+class ErrorsiaVirusKillerApp:
+    def __init__(self):
+
+        self.build_Log = None
+
+        self.debug_frame_disable = True
+
+        self.logic = logic_module.ErrorsiaVirusKillerLogic(gui=None)
+
+        self.logic.initialization()
+
+        # Get the value of the environment variable %appdata%
+        self.appdata = self.logic.appdata
+        # Get evk_build_ver_config and log directory
+        self.file_directory = self.logic.file_directory
+
+        self.logger = logging.getLogger(__name__)
+        self.handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.avk')
+
+        self.formatter = logging.Formatter(
+            '%(asctime)s - %(pathname)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s')
+
+        self.log = {
+            'logging': logging,
+            'logger': self.logger,
+            'handler': self.handler
+        }
+
+        self.handle_log_config()
+        self.initialization_logger_level()
+
+        self.logic.set_log(self.log)
+        self.logger.info('Successfully initialized logic module')
+
+        self.logic.easy_clean_log()
+
+        self.logic.check_update()
+
+        # self.root = tk.Tk()
+        # self.evk_build_ver_config = tk.StringVar()
+
+        VERSION_TEXT = config.FULL_VERSION if hasattr(config, 'FULL_VERSION') else "Errorsia VK"
+
+        self.app = QApplication(sys.argv)
+        self.window = MainWindow(VERSION_TEXT, self.logger, self.build_Log, self.logic)
+
+
+        # gui = gui_module.ErrorsiaVirusKillerGUI(self.root, self.evk_build_ver_config, self.logger, self.build_Log, self.logic)
+        # gui.initialization_root()
+        # gui.set_icon()
+        # gui.setup_ui()
+        self.logger.info('Successfully initialized gui module')
+
+        self.logic.gui = self.window
+        self.logger.info('Successfully loaded logic module')
+
+        # self.root.mainloop()
+
+        self.window.show()
+        sys.exit(self.app.exec())
