@@ -118,3 +118,14 @@ class ErrorsiaVirusKillerApp:
 
         self.window.show()
         sys.exit(self.app.exec())
+
+    def initialization_logger_level(self):
+        if self.build_Log:
+            self.handler.setLevel(logging.DEBUG)
+            self.logger.setLevel(level=logging.DEBUG)
+        else:
+            self.handler.setLevel(100)
+            self.logger.setLevel(100)
+
+        self.handler.setFormatter(self.formatter)
+        self.logger.addHandler(self.handler)
