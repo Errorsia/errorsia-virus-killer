@@ -41,3 +41,18 @@ Main module for xyzvk
 #     Why the codes is more and more complex, while the lines are fewer and fewer?
 #     There is no bugs at present!
 #     But programme is still TESTING!
+
+import logging
+import time
+import tkinter as tk
+from tkinter import messagebox
+import sys
+from PySide6.QtWidgets import QApplication
+from gui.mainwindow import MainWindow
+import xyzvk_config as config
+
+# Private Libraries
+import xyzvk_logic as logic_module
+
+
+# import win11toast
