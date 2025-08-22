@@ -36,3 +36,24 @@ import win32file
 
 # Mudules
 import xyzvk_config as config
+
+
+class ErrorsiaVirusKillerLogic:
+    def __init__(self, gui):
+        self.gui = gui
+        self.logging = self.logger = self.handler = None
+        self._log_ready = False
+
+        # Whether TSET ENVIRONMENT
+        # test = True
+
+        self.disable_debug_frame = True
+
+        # Get the value of the environment variable %appdata%
+        self.appdata = os.getenv("APPDATA")
+        # appdata = os.path.expandvars("%APPDATA%")
+        self.file_directory = self.appdata + '/Arthur/VirusKiller'
+
+        # Whether show Easter Egg
+        # Current condition: On (If Easter_Egg_Index < 0, it's Off)
+        self.Easter_Egg = 0
