@@ -24,3 +24,15 @@ Logic module for xyzvk
 # Update:
 # Rebuild get_removable_drives function
 # Rebuild get_volume_label function
+
+import os
+import subprocess
+import time
+import tkinter as tk
+from tkinter import messagebox
+
+import win32api
+import win32file
+
+# Mudules
+import xyzvk_config as config
