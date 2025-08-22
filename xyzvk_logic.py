@@ -100,3 +100,26 @@ class ErrorsiaVirusKillerLogic:
     def subprocess_run(command):
         return subprocess.run(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE)
+
+    # Config Module: Read & Check Config
+    def read_log_config(self):
+        config_path = f'{self.file_directory}/Config/VirusKiller_Configuration.Elysia'
+
+        # Try to read evk_build_ver_config
+        if not os.path.isfile(config_path):
+            return -1
+
+        try:
+            with open(config_path, "r", encoding="UTF-8") as file:
+                read_config = file.read()
+        except PermissionError:
+            return -2
+
+        enable_log = read_config[0]
+
+        if enable_log == "1":
+            return 1
+        elif enable_log == "0":
+            return 0
+        else:
+            return -1
