@@ -74,3 +74,9 @@ class ErrorsiaVirusKillerLogic:
         self.run_command('chcp 65001')
 
         self.check_path()
+
+    # Check whether OS is Windows nt
+    @staticmethod
+    def check_operate_system():
+        if os.name != 'nt':
+            exit('UNSUPPORTED SYSTEMS')
