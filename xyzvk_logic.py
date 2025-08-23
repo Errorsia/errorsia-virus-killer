@@ -312,3 +312,14 @@ class ErrorsiaVirusKillerLogic:
                     condition_list.append('failed')
                     log_content_list.append(f'Virus files not found')
                     self.logger.warning(f'Virus files not found')
+
+        else:
+            condition_list.append('failed')
+            self.logger.warning(f'Removable disk not found')
+            log_content_list.append(f'Removable disk not found')
+
+        for cnt in range(0, len(log_content_list)):
+            log_content = log_content_list[cnt]
+            condition = condition_list[cnt]
+
+            self.set_insert(module_name, condition, log_content)
