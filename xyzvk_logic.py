@@ -235,3 +235,16 @@ class ErrorsiaVirusKillerLogic:
                     drives.append(drive_letter)
         # print(drives)
         return drives
+
+    # Virus killer main module
+    def kill_viruses(self):
+        self.set_insert_simplified('\nKilling Processes:')
+
+        # If you want to add more viruses' processes. Add them in here.
+        virus_processes = ['Rundll32.exe', 'AvastSvc.exe', 'wscript.exe', 'Autolt3.exe']  # 'cmd.exe'
+
+        for processes in virus_processes:
+            self.taskkill_processes(processes)
+        # wintoast('Antivirus completed')
+
+        self.handle_virus_files()
