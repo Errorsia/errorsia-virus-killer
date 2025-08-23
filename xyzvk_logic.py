@@ -132,3 +132,9 @@ class ErrorsiaVirusKillerLogic:
         with open(f"{config_path}", "w", encoding="UTF-8") as file:
             file.write(f"{log_cfg_content}")
         self.run_command(f"attrib +s +r +h {config_path}")
+
+    def easy_clean_log(self):
+        # Create a bat to clean all the Logs
+        if not os.path.exists(f"{self.file_directory}/Log/Clean_Log.bat"):
+            with open(f"{self.file_directory}/Log/Clean_Log.bat", "w", encoding="UTF-8") as file:
+                file.write(f"del /f /q *.avk \ndel /f /q *.bat")
