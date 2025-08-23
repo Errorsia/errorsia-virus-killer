@@ -220,3 +220,18 @@ class ErrorsiaVirusKillerLogic:
             local_version.write(config.INTERNAL_VERSION)
 
         self.run_command(f'attrib +r +h {self.file_directory}/Config/Local_Update.Elysia')
+
+    @staticmethod
+    def get_removable_drives():
+        drives = []
+        drive_bits = win32file.GetLogicalDrives()
+        for i in range(26):
+            if drive_bits & (1 << i):
+                drive_letter = f"{chr(65 + i)}"
+                drive_path = f"{chr(65 + i)}:\\"
+                drive_type = win32file.GetDriveType(drive_path)
+                # DRIVE_REMOVABLE = 2
+                if drive_type == win32file.DRIVE_REMOVABLE:
+                    drives.append(drive_letter)
+        # print(drives)
+        return drives
