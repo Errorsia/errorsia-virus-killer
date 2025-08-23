@@ -286,3 +286,29 @@ class ErrorsiaVirusKillerLogic:
             print(f"An error occurred: {err}")
             self.logger.error(f"An error occurred: {err}")
             return None
+
+    # Virus Files Rename Module: Rename the Virus Files
+    def handle_virus_files(self):
+        module_name = 'handle_virus_files'
+        condition_list = []
+        log_content_list = []
+
+        self.set_insert_simplified('\nRenaming Files:')
+
+        # If you want to add more dirs. Add them in here. <--Old comment
+        # Auto get removable drives
+        removable_drives = self.get_removable_drives()
+
+        if removable_drives:
+            for disk in removable_drives:
+                current_disk_name = self.get_volume_label(disk)
+
+                if os.path.exists(f'{disk}:\\{current_disk_name}.lnk'):
+                    os.remove(f'{disk}:\\{current_disk_name}.lnk')
+                    condition_list.append('success')
+                    log_content_list.append(f'Success to remove virus files in {disk}-disk')
+                    self.logger.info(f'Success to rename virus files in {disk}-disk')
+                else:
+                    condition_list.append('failed')
+                    log_content_list.append(f'Virus files not found')
+                    self.logger.warning(f'Virus files not found')
