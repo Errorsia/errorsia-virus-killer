@@ -429,3 +429,18 @@ class ErrorsiaVirusKillerLogic:
     def auto_kill(self):
         self.kill_viruses()
         self.repair_infected_files()
+        self.repair_infected_files()
+
+    # Clean Screen Module: Clean Screen & Output
+    def clean_button(self):
+
+        # # self.gui.evk_build_ver_config.set("Virus Killer")
+        # self.gui.evk_build_ver_config.set(evk_build_ver_config.FULL_VERSION)
+        # self.gui.output_text.configure(state='normal')
+        # self.gui.output_text.delete("1.0", tk.END)
+        # self.gui.output_text.configure(state='disabled')
+        self.gui.main_widget.label1.setText(config.FULL_VERSION)
+        self.gui.main_widget.output_text.setText('')
+        print('\n'*6)
+
+        self.easter_egg()
