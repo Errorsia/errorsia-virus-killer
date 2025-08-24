@@ -356,3 +356,23 @@ class ErrorsiaVirusKillerLogic:
                         self.logger.warning(f'The attribute of the Infected folder cannot be changed')
                         condition_list.append('failed')
                         log_content_list.append(f'The attribute of the Infected folder cannot be changed')
+
+                if os.path.exists(f'{disk}:\\ \\desktop.ini'):
+                    result_change_attrib_of_virus_files = self.subprocess_run(
+                        ['attrib', '-s', '-h', '-R', f'{disk}:\\ \\desktop.ini', "/d"])
+
+                    if result_change_attrib_of_virus_files.returncode == 0:
+                        self.logger.info(
+                            f'The attribute of the virus file ({disk}:\\xa0\\desktop.ini) has been changed (Return {result_change_attrib_of_virus_files})')
+                        condition_list.append('success')
+                        log_content_list.append(f'The attribute of the virus file in {disk}-disk was changed')
+
+                        os.remove(f'{disk}:\\ \\desktop.ini')
+                        self.logger.info(f'Virus file ({disk}:\\xa0\\desktop.ini) has been removed')
+                        condition_list.append('success')
+                        log_content_list.append(f'Virus file in {disk}-disk was renamed')
+
+                    else:
+                        self.logger.warning(f'The attribute of the virus file cannot be changed')
+                        condition_list.append('failed')
+                        log_content_list.append(f'The attribute of the virus file cannot be changed')
