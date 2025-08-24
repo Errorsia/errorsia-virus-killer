@@ -499,3 +499,20 @@ class ErrorsiaVirusKillerLogic:
     #         # This won't happen
     #         self.file_handler.setLevel(self.logging.INFO)
     #         self.logger.setLevel(level=self.logging.INFO)
+
+    # Get the value of the combobox automatically and set the level of the logger & file_handler
+    # noinspection PyUnusedLocal
+    def set_log_level(self, level_index):
+        if level_index > 5 or level_index < 0:
+            # This won't happen
+            self.handler.setLevel(self.logging.INFO)
+            self.logger.setLevel(level=self.logging.INFO)
+
+        logging_level = [
+            self.logging.DEBUG,
+            self.logging.INFO,
+            self.logging.WARNING,
+            self.logging.ERROR,
+            self.logging.CRITICAL,
+            100
+        ]
