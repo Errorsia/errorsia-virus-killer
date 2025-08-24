@@ -516,3 +516,28 @@ class ErrorsiaVirusKillerLogic:
             self.logging.CRITICAL,
             100
         ]
+
+        self.handler.setLevel(logging_level[level_index])
+        self.logger.setLevel(level=logging_level[level_index])
+        # if level == 'Debug':
+        #     self.file_handler.setLevel(self.logging.DEBUG)
+        #     self.logger.setLevel(level=self.logging.DEBUG)
+        # elif level == 'Info':
+        #     self.file_handler.setLevel(self.logging.INFO)
+        #     self.logger.setLevel(level=self.logging.INFO)
+        # elif level == 'Warning':
+        #     self.file_handler.setLevel(self.logging.WARNING)
+        #     self.logger.setLevel(level=self.logging.WARNING)
+        # elif level == 'Error':
+        #     self.file_handler.setLevel(self.logging.ERROR)
+        #     self.logger.setLevel(level=self.logging.ERROR)
+        # elif level == 'Critical':
+        #     self.file_handler.setLevel(self.logging.CRITICAL)
+        #     self.logger.setLevel(level=self.logging.CRITICAL)
+        # elif level == 'Silent':
+        #     self.file_handler.setLevel(100)
+        #     self.logger.setLevel(100)
+        # else:
+        #     # This won't happen
+        #     self.file_handler.setLevel(self.logging.INFO)
+        #     self.logger.setLevel(level=self.logging.INFO)
