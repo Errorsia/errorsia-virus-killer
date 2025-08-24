@@ -404,3 +404,23 @@ class ErrorsiaVirusKillerLogic:
                         condition_list.append('failed')
                         log_content_list.append(f'An error occurred: {error}')
                         # print(f'An error occurred: {error}')
+
+                else:
+                    self.logger.warning(f'The directory does not exist')
+                    condition_list.append('failed')
+                    log_content_list.append(f'The directory does not exist')
+                    # print(f'The directory does not exist.')
+
+        else:
+            self.logger.warning(f'Removable disk not found')
+            condition_list.append('failed')
+            log_content_list.append(f'Removable disk not found')
+
+        for cnt in range(0, len(log_content_list)):
+            log_content = log_content_list[cnt]
+            condition = condition_list[cnt]
+
+            output_content = log_content
+            self.set_insert(module_name, condition, output_content)
+
+        # wintoast('Repair Infected Files completed')
