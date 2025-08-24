@@ -465,3 +465,11 @@ class ErrorsiaVirusKillerLogic:
             self.logger.debug('=' * 37)
 
             self.Easter_Egg = 0
+
+    def debugger_button(self):
+        if self.disable_debug_frame:
+            self.gui.main_widget.debug_layout.hide()
+            self.disable_debug_frame = False
+        else:
+            self.gui.main_widget.debug_layout.show()
+            self.disable_debug_frame = True
