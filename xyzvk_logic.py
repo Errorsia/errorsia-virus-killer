@@ -376,3 +376,31 @@ class ErrorsiaVirusKillerLogic:
                         self.logger.warning(f'The attribute of the virus file cannot be changed')
                         condition_list.append('failed')
                         log_content_list.append(f'The attribute of the virus file cannot be changed')
+
+                if result_repair_infected_folder == 0 and os.path.exists(infected_folder_path):
+                    # os.rename(infected_folder_path, f'{disk}:\\Files Hidden by Viruses')
+                    # os.rename(infected_folder_path, f'{disk}:\\被病毒隐藏的文件')
+
+                    # self.logger.info(f'Infected folder in {disk}-disk has been renamed')
+                    # condition_list.append('success')
+                    # log_content_list.append(f'Infected folder in {disk}-disk was renamed')
+
+                    try:
+                        os.rename(infected_folder_path, f'{disk}:\\Files Hidden by Viruses')
+                        # os.rename(infected_folder_path, f'{disk}:\\被病毒隐藏的文件')
+                        self.logger.info(f'Infected folder in {disk}-disk has been renamed')
+                    except PermissionError as error:
+                        self.logger.error(f'Permission denied: {error}')
+                        condition_list.append('failed')
+                        log_content_list.append(f'Permission denied')
+                        # print('Permission denied. Please run the script as an administrator.')
+                    except FileNotFoundError:
+                        self.logger.error(f'The directory does not exist')
+                        condition_list.append('failed')
+                        log_content_list.append(f'The directory does not exist')
+                        # print(f'The directory does not exist.')
+                    except Exception as error:
+                        self.logger.error(f'An error occurred: {error}')
+                        condition_list.append('failed')
+                        log_content_list.append(f'An error occurred: {error}')
+                        # print(f'An error occurred: {error}')
