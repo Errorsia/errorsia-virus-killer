@@ -562,3 +562,7 @@ class ErrorsiaVirusKillerLogic:
         # self.gui.main_widget.output_text.insert('end', output)
         # self.gui.main_widget.output_text.configure(state='disabled')
         self.gui.main_widget.output_text.append(output)
+
+    def handle_close_event(self):
+        self.logger.info('Application shutdown initiated by user')
+        self.logger.info('Graceful termination completed')
