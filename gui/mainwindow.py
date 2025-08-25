@@ -24,3 +24,8 @@ class MainWindow(QMainWindow):
 
         # 关闭事件绑定
         self.logic = logic
+
+
+    def closeEvent(self, event):
+        self.logic.handle_close_event()
+        event.accept()
