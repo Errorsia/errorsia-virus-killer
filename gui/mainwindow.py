@@ -29,3 +29,11 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.logic.handle_close_event()
         event.accept()
+
+    def initialization_window(self):
+        self.setWindowTitle(self.var)
+        # self.setMinimumSize(1360, 720)
+        # self.resize(1360, 720)
+        self.setMinimumSize(960, 540)
+        self.resize(960, 540)
+        self.setMaximumSize(3840, 2160)
