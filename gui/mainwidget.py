@@ -117,3 +117,7 @@ class MainWidget(QWidget):
 
         # self.evk_build_ver_config.set("FINISH")
         self.label1.setText("FINISH")
+
+    def debug_combobox_on_select(self, index):
+        level = self.debug_combobox1.currentText()
+        print(f"Log level set to: {level}, Index{index}")
