@@ -121,3 +121,7 @@ class MainWidget(QWidget):
     def debug_combobox_on_select(self, index):
         level = self.debug_combobox1.currentText()
         print(f"Log level set to: {level}, Index{index}")
+
+    def disable_widgets(self):
+        for btn in self.widgets:
+            btn.setDisabled(True)
