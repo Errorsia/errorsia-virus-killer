@@ -125,3 +125,9 @@ class MainWidget(QWidget):
     def disable_widgets(self):
         for btn in self.widgets:
             btn.setDisabled(True)
+
+            # btn.setEnabled(False)
+
+    def enable_widgets(self):
+        for btn in self.widgets:
+            btn.setEnabled(True)
