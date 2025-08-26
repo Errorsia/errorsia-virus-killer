@@ -67,3 +67,22 @@ class MainWidget(QWidget):
         self.output_text.setReadOnly(True)
         self.debug_layout.addWidget(self.output_text)
 
+        log_selector_layout = QHBoxLayout()
+        log_label = QLabel("Select log output level:")
+        self.debug_combobox1 = QComboBox()
+        self.debug_combobox1.addItems(
+            ["Debug", "Info", "Warning", "Error", "Critical", "Silent"])
+        self.debug_combobox1.setCurrentIndex(0 if self.build_log else 5)
+        self.debug_combobox1.currentIndexChanged.connect(self.debug_combobox_on_select)
+        log_selector_layout.addWidget(log_label)
+        log_selector_layout.addWidget(self.debug_combobox1)
+
+        self.debug_layout.addLayout(log_selector_layout)
+        layout.addLayout(self.debug_layout)
+
+        # self.widgets = [
+        #     self.button1, self.button2, self.button3, self.button4, self.button5, self.debug_combobox1]
+        self.widgets = [
+            self.button1, self.button2, self.button3, self.button4, self.debug_combobox1]
+
+        self.setLayout(layout)
