@@ -50,3 +50,20 @@ class MainWidget(QWidget):
         # self.button5 = QPushButton("Debugger")
         # self.button5.clicked.connect(self.logic.debugger_button)
 
+        # for i, btn in enumerate([self.button1, self.button2, self.button3, self.button4, self.button5]):
+        for i, btn in enumerate([self.button1, self.button2, self.button3, self.button4]):
+            btn.setMinimumHeight(50)
+            button_layout.addWidget(btn, i // 2, i % 2)
+
+        layout.addLayout(button_layout)
+
+        # Debug Frame
+        self.debug_layout = QVBoxLayout()
+        debug_label = QLabel("Debugger Output:")
+        debug_label.setStyleSheet("font-size: 18px;")
+        self.debug_layout.addWidget(debug_label)
+
+        self.output_text = QTextEdit()
+        self.output_text.setReadOnly(True)
+        self.debug_layout.addWidget(self.output_text)
+
