@@ -86,3 +86,17 @@ class MainWidget(QWidget):
             self.button1, self.button2, self.button3, self.button4, self.debug_combobox1]
 
         self.setLayout(layout)
+
+    def kill_virus_main(self):
+        print("Virus killing logic should run here")
+        self.disable_widgets()
+        QApplication.processEvents()
+
+        # self.evk_build_ver_config.set('Killing Virus Processes')
+        self.label1.update()
+
+        self.logic.kill_viruses()
+
+        self.enable_widgets()
+
+        # self.evk_build_ver_config.set("FINISH")
