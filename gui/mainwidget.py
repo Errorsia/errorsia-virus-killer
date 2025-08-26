@@ -100,3 +100,20 @@ class MainWidget(QWidget):
         self.enable_widgets()
 
         # self.evk_build_ver_config.set("FINISH")
+
+    def auto_kill_main(self):
+        print("Auto kill action triggered")
+        self.disable_widgets()
+        QApplication.processEvents()
+
+        # self.evk_build_ver_config.set('Auto Kill')
+        self.label1.setText('Auto Kill')
+        self.label1.update()
+        QApplication.processEvents()
+
+        self.logic.auto_kill()
+
+        self.enable_widgets()
+
+        # self.evk_build_ver_config.set("FINISH")
+        self.label1.setText("FINISH")
