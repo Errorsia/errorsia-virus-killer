@@ -32,3 +32,21 @@ class MainWidget(QWidget):
         self.label1.setMinimumHeight(100)
         layout.addWidget(self.label1)
 
+        # 按钮区域
+        button_layout = QGridLayout()
+
+        self.button1 = QPushButton("Kill Viruses")
+        self.button1.clicked.connect(self.kill_virus_main)
+
+        self.button2 = QPushButton("Repair Infected Files")
+        self.button2.clicked.connect(self.logic.repair_infected_files)
+
+        self.button3 = QPushButton("Auto Kill (Do #1 And #2)")
+        self.button3.clicked.connect(self.auto_kill_main)
+
+        self.button4 = QPushButton("Clean Screen")
+        self.button4.clicked.connect(self.logic.clean_button)
+
+        # self.button5 = QPushButton("Debugger")
+        # self.button5.clicked.connect(self.logic.debugger_button)
+
