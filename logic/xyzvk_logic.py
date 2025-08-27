@@ -76,3 +76,19 @@ class ErrorsiaVirusKillerLogic:
 
         self.check_path()
 
+    # Check whether OS is Windows nt
+    @staticmethod
+    def check_operate_system():
+        if os.name != 'nt':
+            exit('UNSUPPORTED SYSTEMS')
+
+    # Check the working directories
+    def check_path(self):
+        father_directory = self.appdata + '/Arthur'
+        dir_list = ['', '/VirusKiller', '/VirusKiller/Config', '/VirusKiller/Log']
+
+        for dir_tmp in dir_list:
+            dir_tmp = father_directory + dir_tmp
+            if not os.path.exists(dir_tmp):
+                os.mkdir(dir_tmp)
+
