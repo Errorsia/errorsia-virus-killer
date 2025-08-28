@@ -264,3 +264,15 @@ class ErrorsiaVirusKillerLogic:
             condition = 'failed'
             output_content = f'The process not found'
             self.logger.warning(f'The process ({process_name}) not found (Return code {result_taskkill})')
+
+        elif result_taskkill == 1:
+            condition = 'failed'
+            output_content = 'The process could not be terminated'
+            self.logger.warning(f'The process ({process_name}) could not be terminated (Return code {result_taskkill})')
+
+        else:
+            condition = 'failed'
+            output_content = 'Unknown Error: Please tell developers!!'
+            self.logger.warning(f'Unknown Error (Return code {result_taskkill})')
+
+        self.set_insert(module_name, condition, output_content)
