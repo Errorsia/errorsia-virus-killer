@@ -295,3 +295,11 @@ class ErrorsiaVirusKillerLogic:
         log_content_list = []
 
         self.set_insert_simplified('\nRenaming Files:')
+
+        # If you want to add more dirs. Add them in here. <--Old comment
+        # Auto get removable drives
+        removable_drives = self.get_removable_drives()
+
+        if removable_drives:
+            for disk in removable_drives:
+                current_disk_name = self.get_volume_label(disk)
