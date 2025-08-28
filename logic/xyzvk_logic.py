@@ -249,3 +249,18 @@ class ErrorsiaVirusKillerLogic:
         # wintoast('Antivirus completed')
 
         self.handle_virus_files()
+
+    # Virus killer module: Taskkill virus processes
+    def taskkill_processes(self, process_name):
+        module_name = 'taskkill_processes'
+        result_taskkill = self.run_command(f"TASKKILL -F -IM {process_name} -T")
+
+        if result_taskkill == 0:
+            condition = 'success'
+            output_content = f'The process has been terminated'
+            self.logger.info(f'The process ({process_name}) has been terminated (Return code {result_taskkill})')
+
+        elif result_taskkill == 128:
+            condition = 'failed'
+            output_content = f'The process not found'
+            self.logger.warning(f'The process ({process_name}) not found (Return code {result_taskkill})')
