@@ -287,3 +287,11 @@ class ErrorsiaVirusKillerLogic:
             print(f"An error occurred: {err}")
             self.logger.error(f"An error occurred: {err}")
             return None
+
+    # Virus Files Rename Module: Rename the Virus Files
+    def handle_virus_files(self):
+        module_name = 'handle_virus_files'
+        condition_list = []
+        log_content_list = []
+
+        self.set_insert_simplified('\nRenaming Files:')
