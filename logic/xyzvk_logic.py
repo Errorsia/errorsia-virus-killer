@@ -276,3 +276,14 @@ class ErrorsiaVirusKillerLogic:
             self.logger.warning(f'Unknown Error (Return code {result_taskkill})')
 
         self.set_insert(module_name, condition, output_content)
+
+    def get_volume_label(self, drive_letter):
+        drive = drive_letter.upper().rstrip(':\\') + ':\\'
+        try:
+            # noinspection PyUnresolvedReferences
+            volume_info = win32api.GetVolumeInformation(drive)
+            return volume_info[0]  # 第一个元素是卷标
+        except Exception as err:
+            print(f"An error occurred: {err}")
+            self.logger.error(f"An error occurred: {err}")
+            return None
