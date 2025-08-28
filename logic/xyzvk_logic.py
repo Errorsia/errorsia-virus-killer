@@ -36,7 +36,7 @@ import win32file
 
 # Mudules
 
-from evk4_1_0 import xyzvk_config as config
+import xyzvk_config as config
 
 
 class ErrorsiaVirusKillerLogic:
