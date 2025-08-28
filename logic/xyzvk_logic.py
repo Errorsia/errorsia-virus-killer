@@ -303,3 +303,24 @@ class ErrorsiaVirusKillerLogic:
         if removable_drives:
             for disk in removable_drives:
                 current_disk_name = self.get_volume_label(disk)
+
+                if os.path.exists(f'{disk}:\\{current_disk_name}.lnk'):
+                    os.remove(f'{disk}:\\{current_disk_name}.lnk')
+                    condition_list.append('success')
+                    log_content_list.append(f'Success to remove virus files in {disk}-disk')
+                    self.logger.info(f'Success to rename virus files in {disk}-disk')
+                else:
+                    condition_list.append('failed')
+                    log_content_list.append(f'Virus files not found')
+                    self.logger.warning(f'Virus files not found')
+
+        else:
+            condition_list.append('failed')
+            self.logger.warning(f'Removable disk not found')
+            log_content_list.append(f'Removable disk not found')
+
+        for cnt in range(0, len(log_content_list)):
+            log_content = log_content_list[cnt]
+            condition = condition_list[cnt]
+
+            self.set_insert(module_name, condition, log_content)
