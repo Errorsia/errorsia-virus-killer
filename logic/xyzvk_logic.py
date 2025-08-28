@@ -212,3 +212,12 @@ class ErrorsiaVirusKillerLogic:
             return True
         else:
             return False
+
+    def build_local_update_config(self):
+        if os.path.exists(f'{self.file_directory}/Config/Local_Update.Elysia'):
+            self.run_command(f'attrib -r -h {self.file_directory}/Config/Local_Update.Elysia')
+
+        with open(f'{self.file_directory}/Config/Local_Update.Elysia', 'w', encoding="UTF-8") as local_version:
+            local_version.write(config.INTERNAL_VERSION)
+
+        self.run_command(f'attrib +r +h {self.file_directory}/Config/Local_Update.Elysia')
