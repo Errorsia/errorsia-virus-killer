@@ -192,3 +192,23 @@ class ErrorsiaVirusKillerLogic:
 
         self.build_local_update_config()
         return -1
+
+    # Check whether local_version is legal
+    @staticmethod
+    def is_legal_version(local_version):
+        local_version = str(local_version)
+        digit_is_int = 0
+
+        if len(local_version) != 9:
+            return False
+
+        for tmp_local_version in local_version:
+            for tmp_num in range(10):
+                if tmp_local_version == str(tmp_num):
+                    digit_is_int += 1
+                    break
+
+        if digit_is_int == 9:
+            return True
+        else:
+            return False
