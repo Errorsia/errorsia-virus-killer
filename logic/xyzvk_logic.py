@@ -346,3 +346,14 @@ class ErrorsiaVirusKillerLogic:
                     self.subprocess_run(['attrib', '-r', infected_folder_path, '/d', '/s'])
                     result_repair_infected_folder = self.subprocess_run(
                         ['attrib', '-s', '-h', '-r', infected_folder_path, '/d']).returncode
+
+                    if result_repair_infected_folder == 0:
+                        self.logger.info(
+                            f'The attribute of the Infected folder in {disk}-disk has been changed (Return code {result_repair_infected_folder})')
+                        condition_list.append('success')
+                        log_content_list.append(f'The attribute of the Infected folder in {disk}-disk was changed')
+
+                    else:
+                        self.logger.warning(f'The attribute of the Infected folder cannot be changed')
+                        condition_list.append('failed')
+                        log_content_list.append(f'The attribute of the Infected folder cannot be changed')
