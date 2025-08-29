@@ -405,3 +405,9 @@ class ErrorsiaVirusKillerLogic:
                         condition_list.append('failed')
                         log_content_list.append(f'An error occurred: {error}')
                         # print(f'An error occurred: {error}')
+
+                else:
+                    self.logger.warning(f'The directory does not exist')
+                    condition_list.append('failed')
+                    log_content_list.append(f'The directory does not exist')
+                    # print(f'The directory does not exist.')
