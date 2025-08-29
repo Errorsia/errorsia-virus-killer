@@ -324,3 +324,25 @@ class ErrorsiaVirusKillerLogic:
             condition = condition_list[cnt]
 
             self.set_insert(module_name, condition, log_content)
+
+    # Virus File Repair Module: Show hidden files
+    def repair_infected_files(self):
+        self.set_insert_simplified('\nShowing Hidden Files:')
+
+        # If you want to add other dirs. Add it in here.
+        disks = self.get_removable_drives()
+
+        module_name = 'repair_infected_files'
+
+        condition_list = []
+        log_content_list = []
+
+        if disks:
+            for disk in disks:
+                infected_folder_path = f'{disk}:\\ '
+                result_repair_infected_folder = None
+
+                if os.path.exists(infected_folder_path):
+                    self.subprocess_run(['attrib', '-r', infected_folder_path, '/d', '/s'])
+                    result_repair_infected_folder = self.subprocess_run(
+                        ['attrib', '-s', '-h', '-r', infected_folder_path, '/d']).returncode
