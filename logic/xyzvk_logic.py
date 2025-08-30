@@ -541,3 +541,12 @@ class ErrorsiaVirusKillerLogic:
         #     # This won't happen
         #     self.file_handler.setLevel(self.logging.INFO)
         #     self.logger.setLevel(level=self.logging.INFO)
+
+    def set_insert_simplified(self, content):
+        minus_sign_quantity = '-' * 50
+        output = f'{minus_sign_quantity}{content}\n'
+
+        # self.gui.output_text.configure(state='normal')
+        # self.gui.output_text.insert('end', output)
+        # self.gui.output_text.configure(state='disabled')
+        self.gui.main_widget.output_text.append(output)
