@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Project Name: Errorsia virus killer
-# Version: 4.0.0
+# Version: 4.1.0
 # Authors:
 #   - Ariskanyaa <Ariskanyaa@outlook.com>
 #   - Errorsia <Errorsia@outlook.com>
@@ -47,13 +47,16 @@ import time
 import tkinter as tk
 from tkinter import messagebox
 import sys
+# import os
 from PySide6.QtWidgets import QApplication
 from gui.mainwindow import MainWindow
 import xyzvk_config as config
 
 # Private Libraries
-import xyzvk_logic as logic_module
-
+# from . import xyzvk_logic as logic_module
+# sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+# from .logic import xyzvk_logic as logic_module
+from logic import xyzvk_logic as logic_module
 
 # import win11toast
 
@@ -83,7 +86,7 @@ class ErrorsiaVirusKillerApp:
         self.log = {
             'logging': logging,
             'logger': self.logger,
-            'handler': self.handler
+            'file_handler': self.handler
         }
 
         self.handle_log_config()
