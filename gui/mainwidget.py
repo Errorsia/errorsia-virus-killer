@@ -2,6 +2,7 @@ from PySide6.QtWidgets import (
     QWidget, QPushButton, QLabel, QTextEdit,
     QComboBox, QGridLayout, QVBoxLayout, QHBoxLayout, QApplication  # , QFrame
 )
+# from PySide6.QtCore import QObject, Signal, QRunnable, Slot, QThreadPool
 from PySide6.QtCore import Qt
 
 class MainWidget(QWidget):
@@ -10,8 +11,9 @@ class MainWidget(QWidget):
         self.var = var
         self.logic = logic
         self.build_log = build_log
+        # self.pool = QThreadPool()
         self.label1 = None
-        # self.debug_frame = self.debug_combobox1 = self.output_text = None
+        # self.debug_frame = self.log_level_combobox = self.output_text = None
         self.debug_layout = self.debug_combobox1 = self.output_text = None
         self.button1 = self.button2 = self.button3 = self.button4 = self.button5 = None
         self.widgets = None
@@ -81,7 +83,7 @@ class MainWidget(QWidget):
         layout.addLayout(self.debug_layout)
 
         # self.widgets = [
-        #     self.button1, self.button2, self.button3, self.button4, self.button5, self.debug_combobox1]
+        #     self.button1, self.button2, self.button3, self.button4, self.button5, self.log_level_combobox]
         self.widgets = [
             self.button1, self.button2, self.button3, self.button4, self.debug_combobox1]
 
