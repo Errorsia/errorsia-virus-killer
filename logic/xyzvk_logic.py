@@ -550,3 +550,19 @@ class ErrorsiaVirusKillerLogic:
         # self.gui.output_text.insert('end', output)
         # self.gui.output_text.configure(state='disabled')
         self.gui.main_widget.output_text.append(output)
+
+    def set_insert(self, module, condition, content):
+        current_time = time.asctime()[-13:-5]
+
+        module = module.upper()
+        condition = condition.upper()
+
+        output = f'{current_time} | [{module}]\t|\t{condition}\t|\t{content}'
+        # self.gui.main_widget.output_text.configure(state='normal')
+        # self.gui.main_widget.output_text.insert('end', output)
+        # self.gui.main_widget.output_text.configure(state='disabled')
+        self.gui.main_widget.output_text.append(output)
+
+    def handle_close_event(self):
+        self.logger.info('Application shutdown initiated by user')
+        self.logger.info('Graceful termination completed')
