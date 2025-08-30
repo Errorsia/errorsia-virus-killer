@@ -444,3 +444,24 @@ class ErrorsiaVirusKillerLogic:
         print('\n'*6)
 
         self.easter_egg()
+
+    # Easter_Egg_Index module
+    def easter_egg(self):
+
+        if self.Easter_Egg < 0:
+            pass
+        elif self.Easter_Egg < 4:
+            self.Easter_Egg += 1
+        else:
+            # # self.gui.evk_build_ver_config.set("Copyright © 2024 - 2030 Arthur_xyz")
+            # self.gui.evk_build_ver_config.set("Copyright (C) 2024 Arthur_xyz")
+            self.gui.main_widget.label1.setText("Copyright (C) 2024 Arthur_xyz ")
+
+            self.logger.debug('=' * 37)
+            self.logger.debug('Copyright 2024 Arthur_xyz')
+            self.logger.debug('The Easter Egg was discovered by you!')
+            self.logger.debug('Developer:\tArthur_xyz')
+            self.logger.debug('Email:\tArthur_xyz@outlook.com')
+            self.logger.debug('=' * 37)
+
+            self.Easter_Egg = 0
