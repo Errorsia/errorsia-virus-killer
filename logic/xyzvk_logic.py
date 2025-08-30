@@ -465,3 +465,37 @@ class ErrorsiaVirusKillerLogic:
             self.logger.debug('=' * 37)
 
             self.Easter_Egg = 0
+
+    def debugger_button(self):
+        if self.disable_debug_frame:
+            self.gui.main_widget.settings_page_layout.hide()
+            self.disable_debug_frame = False
+        else:
+            self.gui.main_widget.settings_page_layout.show()
+            self.disable_debug_frame = True
+
+    # Get the value of the combobox automatically and set the level of the logger & file_handler
+    # noinspection PyUnusedLocal
+    # def set_log_level(self, level):
+    #     if level == 'Debug':
+    #         self.file_handler.setLevel(self.logging.DEBUG)
+    #         self.logger.setLevel(level=self.logging.DEBUG)
+    #     elif level == 'Info':
+    #         self.file_handler.setLevel(self.logging.INFO)
+    #         self.logger.setLevel(level=self.logging.INFO)
+    #     elif level == 'Warning':
+    #         self.file_handler.setLevel(self.logging.WARNING)
+    #         self.logger.setLevel(level=self.logging.WARNING)
+    #     elif level == 'Error':
+    #         self.file_handler.setLevel(self.logging.ERROR)
+    #         self.logger.setLevel(level=self.logging.ERROR)
+    #     elif level == 'Critical':
+    #         self.file_handler.setLevel(self.logging.CRITICAL)
+    #         self.logger.setLevel(level=self.logging.CRITICAL)
+    #     elif level == 'Silent':
+    #         self.file_handler.setLevel(100)
+    #         self.logger.setLevel(100)
+    #     else:
+    #         # This won't happen
+    #         self.file_handler.setLevel(self.logging.INFO)
+    #         self.logger.setLevel(level=self.logging.INFO)
