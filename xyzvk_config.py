@@ -37,8 +37,8 @@ Config of xyzvk
 # Pardofelis
 
 PROGRAMME_NAME = 'Virus Killer'
-VERSION = '4.0.0'
+VERSION = '4.1.0'
 FULL_VERSION = f'{PROGRAMME_NAME} V{VERSION}'
-INTERNAL_VERSION = '%03d%03d%03d' % (4, 0, 0)
+INTERNAL_VERSION = '%03d%03d%03d' % (4, 1, 0)
 CODE_NAME = 'Griseo'
 NICKNAME = 'Ego'
