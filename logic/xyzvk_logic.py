@@ -499,3 +499,45 @@ class ErrorsiaVirusKillerLogic:
     #         # This won't happen
     #         self.file_handler.setLevel(self.logging.INFO)
     #         self.logger.setLevel(level=self.logging.INFO)
+
+    # Get the value of the combobox automatically and set the level of the logger & file_handler
+    # noinspection PyUnusedLocal
+    def set_log_level(self, level_index):
+        if level_index > 5 or level_index < 0:
+            # This won't happen
+            self.handler.setLevel(self.logging.INFO)
+            self.logger.setLevel(level=self.logging.INFO)
+
+        logging_level = [
+            self.logging.DEBUG,
+            self.logging.INFO,
+            self.logging.WARNING,
+            self.logging.ERROR,
+            self.logging.CRITICAL,
+            100
+        ]
+
+        self.handler.setLevel(logging_level[level_index])
+        self.logger.setLevel(level=logging_level[level_index])
+        # if level == 'Debug':
+        #     self.file_handler.setLevel(self.logging.DEBUG)
+        #     self.logger.setLevel(level=self.logging.DEBUG)
+        # elif level == 'Info':
+        #     self.file_handler.setLevel(self.logging.INFO)
+        #     self.logger.setLevel(level=self.logging.INFO)
+        # elif level == 'Warning':
+        #     self.file_handler.setLevel(self.logging.WARNING)
+        #     self.logger.setLevel(level=self.logging.WARNING)
+        # elif level == 'Error':
+        #     self.file_handler.setLevel(self.logging.ERROR)
+        #     self.logger.setLevel(level=self.logging.ERROR)
+        # elif level == 'Critical':
+        #     self.file_handler.setLevel(self.logging.CRITICAL)
+        #     self.logger.setLevel(level=self.logging.CRITICAL)
+        # elif level == 'Silent':
+        #     self.file_handler.setLevel(100)
+        #     self.logger.setLevel(100)
+        # else:
+        #     # This won't happen
+        #     self.file_handler.setLevel(self.logging.INFO)
+        #     self.logger.setLevel(level=self.logging.INFO)
