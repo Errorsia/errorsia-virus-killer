@@ -29,8 +29,11 @@ class MainWidget(QWidget):
         # self.label1.setAlignment(Qt.AlignCenter)
         # 这行代码的意思是将 label1（一个标签控件）中的文字居中对齐，也就是让文字在标签中水平和垂直方向都处于中间位置。
         self.label1.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.label1.setStyleSheet(
-            "background-color: lightcyan; font-size: 32px;")
+        self.label1.setStyleSheet("""
+                    background-color: lightcyan; 
+                    border-radius: 8px;
+                    font-size: 36px;
+                    """)
         self.label1.setMinimumHeight(100)
         layout.addWidget(self.label1)
 
