@@ -36,9 +36,9 @@ Config of xyzvk
 # Hua,
 # Pardofelis
 
-PROGRAMME_NAME = 'Virus Killer'
-VERSION = '4.1.0'
+PROGRAMME_NAME = 'Errorsia Virus Killer'
+VERSION = '4.1.1'
 FULL_VERSION = f'{PROGRAMME_NAME} V{VERSION}'
-INTERNAL_VERSION = '%03d%03d%03d' % (4, 1, 0)
+INTERNAL_VERSION = '%03d%03d%03d' % (4, 1, 1)
 CODE_NAME = 'Griseo'
 NICKNAME = 'Ego'
