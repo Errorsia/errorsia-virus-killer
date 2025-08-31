@@ -64,8 +64,14 @@ class MainWidget(QWidget):
 
         # Debug Frame
         self.debug_layout = QVBoxLayout()
-        debug_label = QLabel("Debugger Output:")
-        debug_label.setStyleSheet("font-size: 18px;")
+        debug_label = QLabel(" " * 3 + "Debugger Output:")
+        # debug_label = QLabel("\tDebugger Output:")
+        debug_label.setMinimumHeight(25)
+        debug_label.setStyleSheet("""
+            font-size: 18px;
+            border-radius: 5px;
+            background-color: #bad7df
+        """)
         self.debug_layout.addWidget(debug_label)
 
         self.output_text = QTextEdit()
