@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Project Name: Errorsia virus killer
-# Version: 4.1.0
+# Version: 4.1.1
 # Authors:
 #   - Ariskanyaa <Ariskanyaa@outlook.com>
 #   - Errorsia <Errorsia@outlook.com>
