@@ -37,8 +37,8 @@ Config of Errorsia virus killer
 # Pardofelis
 
 PROGRAMME_NAME = 'Errorsia Virus Killer'
-VERSION = '4.2.0'
+VERSION = '4.2.1'
 FULL_VERSION = f'{PROGRAMME_NAME} V{VERSION}'
-INTERNAL_VERSION = '%03d%03d%03d' % (4, 2, 0)
+INTERNAL_VERSION = '%03d%03d%03d' % (4, 2, 1)
 CODE_NAME = 'Griseo'
 NICKNAME = 'Ego'
