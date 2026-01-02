@@ -6,7 +6,7 @@ from . import images
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, var, logger, build_log, logic):
+    def __init__(self, var, logger, logic):
         super().__init__()
         self.var = var
 
@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
         self.set_icon()
 
         # 设置 central widget
-        self.main_widget = MainWidget(var, logic, build_log)
+        self.main_widget = MainWidget(var, logic)
         self.setCentralWidget(self.main_widget)
 
         self.logger = logger

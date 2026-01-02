@@ -6,11 +6,11 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 
 class MainWidget(QWidget):
-    def __init__(self, var, logic, build_log):
+    def __init__(self, var, logic):
         super().__init__()
         self.var = var
         self.logic = logic
-        self.build_log = build_log
+        self.build_log = self.logic.build_Log
         # self.pool = QThreadPool()
         self.label1 = None
         # self.debug_frame = self.log_level_combobox = self.output_text = None
@@ -26,8 +26,8 @@ class MainWidget(QWidget):
         # 顶部标签
         self.label1 = QLabel()
         self.label1.setText(self.var)
-        # self.label1.setAlignment(Qt.AlignCenter)
-        # 这行代码的意思是将 label1（一个标签控件）中的文字居中对齐，也就是让文字在标签中水平和垂直方向都处于中间位置。
+        # self.label_top.setAlignment(Qt.AlignCenter)
+        # 这行代码的意思是将 label_top（一个标签控件）中的文字居中对齐，也就是让文字在标签中水平和垂直方向都处于中间位置。
         self.label1.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.label1.setStyleSheet("""
             background-color: lightcyan; 

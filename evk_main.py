@@ -32,18 +32,15 @@ Main module for Errorsia virus killer
 """
 
 # Update Log:
-# Rebuild config module
+# Rebuild all files
 #
 # 更新日志:
-# 重构配置文件
+# 重构所有文件
 
 # Author's message:
 #     Why the codes is more and more complex, while the lines are fewer and fewer?
 #     There is no bugs at present!
 #     But programme is still TESTING!
-
-
-# ⚠️ Important Notice: This version introduces breaking changes that may affect existing functionality or compatibility
 
 # import logging
 import sys
@@ -111,7 +108,7 @@ class ErrorsiaVirusKillerApp:
         ver_text = evk_build_ver_config.FULL_VERSION if hasattr(evk_build_ver_config, 'FULL_VERSION') else "Errorsia Virus Killer"
 
         self.app = QApplication(sys.argv)
-        self.window = MainWindow(ver_text, self.logger, self.build_Log, self.logic)
+        self.window = MainWindow(ver_text, self.logger, self.logic)
 
         # gui = gui_module.ErrorsiaVirusKillerGUI(self.root, self.evk_build_ver_config, self.logger, self.build_Log, self.logic)
         # gui.initialization_root()
