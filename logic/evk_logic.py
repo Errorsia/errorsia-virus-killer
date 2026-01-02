@@ -146,8 +146,9 @@ class ErrorsiaVirusKillerLogic:
 
             case RuntimeFunctionStatus.SUCCESS:
                 log_config = self.runtime_config.get("logging")
+                print(id(log_config), id(self.runtime_config.get("logging")))
 
-                if log_config != {}:
+                if log_config != {} and log_config:
 
                     if isinstance(log_config.get("enable_log"), bool):
                         build_log = log_config["enable_log"]
@@ -157,13 +158,12 @@ class ErrorsiaVirusKillerLogic:
                         log_config["enable_log"] = build_log
                         self.runtime_config_object.modified = True
 
-                        print(self.runtime_config.get("logging"), log_config['enable_log'])
+
+                        print(self.runtime_config.get("logging"))
                 else:
                     build_log = self.set_log_dict()
 
             case RuntimeFunctionStatus.FAILURE:
-                # Create log dict
-                self.runtime_config['logging'] = {}
                 build_log = self.set_log_dict()
 
             case _:
@@ -174,8 +174,14 @@ class ErrorsiaVirusKillerLogic:
         self.initialization_logger_level(build_log)
 
     def set_log_dict(self):
+        print(123214123)
+        # Create log dict
+        self.runtime_config['logging'] = {}
         build_log = self.ask_enable_log()
-        self.runtime_config['logging']['enable_log'] = build_log
+        # self.runtime_config['logging']['enable_log'] = build_log
+        print(self.runtime_config)
+        self.runtime_config['logging'].update({'enable_log': build_log})
+        print(self.runtime_config)
         self.runtime_config_object.modified = True
         return build_log
 
@@ -264,7 +270,7 @@ class ErrorsiaVirusKillerLogic:
         internal_version = int(evk_build_ver_config.INTERNAL_VERSION)
         online_update_version = -1
         local_update_version = int(self.get_local_version())
-        print(local_update_version)
+        # print(local_update_version)
 
         if internal_version >= online_update_version and internal_version >= local_update_version:
             return
@@ -275,7 +281,7 @@ class ErrorsiaVirusKillerLogic:
                 'Update Available',
                 'A new version is available.\n'
                 'Do you want to download the new version?\n\n'
-                'You can also ask Arthur_xyz<Arthur_xyz@outlook.com> for the update.\n\n'
+                'You can also ask Errorsia<Errorsia@outlook.com> for the update.\n\n'
             )
 
             if execute_update:
@@ -287,14 +293,14 @@ class ErrorsiaVirusKillerLogic:
                 tk.messagebox.showwarning(
                     'Update Available',
                     'A new version is available.\n'
-                    'Please ask Arthur_xyz<Arthur_xyz@outlook.com> for the update.\n\n'
+                    'Please ask Errorsia<Errorsia@outlook.com> for the update.\n\n'
                 )
 
         else:
             tk.messagebox.showwarning(
                 'Update Available',
                 'A new version is available.\n'
-                'Please ask Arthur_xyz<Arthur_xyz@outlook.com> for the update.\n\n'
+                'Please ask Errorsia<Errorsia@outlook.com> for the update.\n\n'
             )
 
         sys.exit('UPDATE AVAILABLE')
@@ -320,7 +326,6 @@ class ErrorsiaVirusKillerLogic:
         local_update_config = self.runtime_config.get('app')
         if local_update_config:
             if local_update_config.get('internal_version') and self.is_legal_version(local_update_config.get('internal_version')):
-                print('update')
                 return local_update_config.get('internal_version')
             else:
                 local_update_config['internal_version'] = evk_build_ver_config.INTERNAL_VERSION
@@ -583,28 +588,26 @@ class ErrorsiaVirusKillerLogic:
         # self.gui.output_text.configure(state='disabled')
         self.gui.main_widget.label_top.setText(evk_build_ver_config.FULL_VERSION)
         self.gui.main_widget.output_text.setText('')
-        print('\n'*6)
+        print('-' * 20)
 
         self.easter_egg()
 
     # Easter_Egg_Index module
     def easter_egg(self):
-        print(self.runtime_config)
-
         if self.Easter_Egg < 0:
             pass
         elif self.Easter_Egg < 4:
             self.Easter_Egg += 1
         else:
-            # # self.gui.evk_build_ver_config.set("Copyright © 2024 - 2030 Arthur_xyz")
-            # self.gui.evk_build_ver_config.set("Copyright (C) 2024 Arthur_xyz")
-            self.gui.main_widget.label_top.setText("Copyright (C) 2024 Arthur_xyz ")
+            # # self.gui.evk_build_ver_config.set("Copyright © 2024 - 2030 Errorsia")
+            # self.gui.evk_build_ver_config.set("Copyright (C) 2024 Errorsia")
+            self.gui.main_widget.label_top.setText("Copyright (C) 2024 Errorsia ")
 
             self.logger.debug('=' * 37)
-            self.logger.debug('Copyright 2024 Arthur_xyz')
+            self.logger.debug('Copyright 2024 Errorsia')
             self.logger.debug('The Easter Egg was discovered by you!')
-            self.logger.debug('Developer:\tArthur_xyz')
-            self.logger.debug('Email:\tArthur_xyz@outlook.com')
+            self.logger.debug('Developer:\tErrorsia')
+            self.logger.debug('Email:\tErrorsia@outlook.com')
             self.logger.debug('=' * 37)
 
             self.Easter_Egg = 0
@@ -665,7 +668,7 @@ class ErrorsiaVirusKillerLogic:
 
     def set_insert_simplified(self, content):
         minus_sign_quantity = '-' * 50
-        output = f'{minus_sign_quantity}{content}\n'
+        output = f'{minus_sign_quantity} <b>{content}</b> {minus_sign_quantity}<br>'
 
         # self.gui.output_text.configure(state='normal')
         # self.gui.output_text.insert('end', output)
@@ -721,7 +724,7 @@ class ErrorsiaVirusKillerRuntimeConfig:
     def read_and_analysis_config(self):
         """
         Read config file and analysis data from it.
-
+        
         :return: SUCCESS if successfully loads the config file, FAILURE otherwise.
             If confile doesn't exist,WARNING if errors are recorded.
         """
@@ -746,7 +749,15 @@ class ErrorsiaVirusKillerRuntimeConfig:
         except PermissionError:
             self.read_condition = RuntimeFunctionStatus.WARNING
             # return RuntimeConfigStatus.WARNING
-        except Exception:
+        except tomllib.TOMLDecodeError:
+            # Incorrect format of TOML file
+            # except tomllib.TOMLDecodeError as err:
+            # print('====')
+            # print(err, type(err))
+            self.read_condition = RuntimeFunctionStatus.FAILURE
+        except Exception as err:
+            print(err, type(err))
+            print('Invalid value' in err)
             self.read_condition = RuntimeFunctionStatus.WARNING
             # return RuntimeConfigStatus.WARNING
         finally:
