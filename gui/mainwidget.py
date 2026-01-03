@@ -13,7 +13,6 @@ class MainWidget(QWidget):
         self.build_log = self.logic.build_Log
         # self.pool = QThreadPool()
         self.label1 = None
-        # self.debug_frame = self.log_level_combobox = self.output_text = None
         self.debug_layout = self.debug_combobox1 = self.output_text = None
         self.button1 = self.button2 = self.button3 = self.button4 = self.button5 = None
         self.widgets = None
@@ -32,7 +31,7 @@ class MainWidget(QWidget):
         self.label1.setStyleSheet("""
             background-color: lightcyan; 
             border-radius: 8px;
-            font-size: 36px;
+            font-size: 40px;
             """)
         self.label1.setMinimumHeight(100)
         layout.addWidget(self.label1)
@@ -95,7 +94,6 @@ class MainWidget(QWidget):
         # Debug Frame
         self.debug_layout = QVBoxLayout()
         debug_label = QLabel(" " * 3 + "Debugger Output:")
-        # debug_label = QLabel("\tDebugger Output:")
         debug_label.setMinimumHeight(25)
         debug_label.setStyleSheet("""
             font-size: 18px;
@@ -105,6 +103,7 @@ class MainWidget(QWidget):
         self.debug_layout.addWidget(debug_label)
 
         self.output_text = QTextEdit()
+        # self.output_text.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         self.output_text.setReadOnly(True)
         self.debug_layout.addWidget(self.output_text)
 
@@ -156,7 +155,6 @@ class MainWidget(QWidget):
 
         self.enable_widgets()
 
-        # self.evk_build_ver_config.set("FINISH")
         self.label1.setText("FINISH")
 
     def debug_combobox_on_select(self, index):
@@ -166,7 +164,6 @@ class MainWidget(QWidget):
     def disable_widgets(self):
         for widget in self.widgets:
             widget.setDisabled(True)
-
             # widget.setEnabled(False)
 
     def enable_widgets(self):

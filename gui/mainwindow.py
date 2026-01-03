@@ -1,8 +1,10 @@
-from PySide6.QtWidgets import QMainWindow
-from .mainwidget import MainWidget
-from PySide6.QtGui import QIcon, QPixmap
 import base64
+
+from PySide6.QtGui import QIcon, QPixmap
+from PySide6.QtWidgets import QMainWindow
+
 from . import images
+from .mainwidget import MainWidget
 
 
 class MainWindow(QMainWindow):
@@ -24,7 +26,6 @@ class MainWindow(QMainWindow):
 
         # 关闭事件绑定
         self.logic = logic
-
 
     def closeEvent(self, event):
         self.logic.handle_close_event()
