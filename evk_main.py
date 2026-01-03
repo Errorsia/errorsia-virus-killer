@@ -32,23 +32,11 @@ Main module for Errorsia virus killer
 """
 
 # Update Log:
-# Rebuild all files
-#
-# 更新日志:
-# 重构所有文件
 
-# Author's message:
-#     Why the codes is more and more complex, while the lines are fewer and fewer?
-#     There is no bugs at present!
-#     But programme is still TESTING!
+# ⚠️ Important Notice: This is a Beta version. The programme is testing now.
 
-# import logging
 import sys
-# import time
-# import tkinter as tk
-# from tkinter import messagebox
 
-# import os
 from PySide6.QtWidgets import QApplication
 
 import evk_build_config as evk_build_ver_config
@@ -60,24 +48,18 @@ from gui.mainwindow import MainWindow
 from logic import evk_logic as logic_module
 
 
-# import win11toast
-
-
 class ErrorsiaVirusKillerApp:
     def __init__(self):
-
         # self.build_Log = None
-
-        self.debug_frame_disable = True
 
         self.logic = logic_module.ErrorsiaVirusKillerLogic(gui=None)
 
         self.logic.initialization()
 
         # Get the value of the environment variable %appdata%
-        self.appdata = self.logic.appdata
+        # self.appdata = self.logic.appdata
         # Get evk_build_ver_config and log directory
-        self.file_directory = self.logic.file_directory
+        # self.file_directory = self.logic.file_directory
 
         # self.logger = logging.getLogger(__name__)
         # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
@@ -102,26 +84,18 @@ class ErrorsiaVirusKillerApp:
 
         # self.logic.easy_clean_log()
 
-        # self.root = tk.Tk()
-        # self.evk_build_ver_config = tk.StringVar()
-
-        ver_text = evk_build_ver_config.FULL_VERSION if hasattr(evk_build_ver_config, 'FULL_VERSION') else "Errorsia Virus Killer"
+        ver_text = evk_build_ver_config.FULL_VERSION if hasattr(evk_build_ver_config,
+                                                                'FULL_VERSION') else "Errorsia Virus Killer"
 
         self.app = QApplication(sys.argv)
-        self.window = MainWindow(ver_text, self.logger, self.logic)
+        self.user_interface = MainWindow(ver_text, self.logger, self.logic)
 
-        # gui = gui_module.ErrorsiaVirusKillerGUI(self.root, self.evk_build_ver_config, self.logger, self.build_Log, self.logic)
-        # gui.initialization_root()
-        # gui.set_icon()
-        # gui.setup_ui()
         self.logger.info('Successfully initialized gui module')
 
-        self.logic.gui = self.window
+        self.logic.gui = self.user_interface
         self.logger.info('Successfully loaded logic module')
 
-        # self.root.mainloop()
-
-        self.window.show()
+        self.user_interface.show()
         sys.exit(self.app.exec())
 
     # def initialization_logger_level(self):
