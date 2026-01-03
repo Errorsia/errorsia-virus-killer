@@ -26,13 +26,12 @@ import subprocess
 import sys
 import time
 import tkinter as tk
-from copy import deepcopy
-from tkinter import messagebox
 import tomllib
-import tomli_w
-
+from copy import deepcopy
 from enum import Enum
+from tkinter import messagebox
 
+import tomli_w
 import win32api
 import win32file
 
@@ -46,7 +45,7 @@ class ErrorsiaVirusKillerLogic:
         self.formatter = None
         self.gui = gui
         self.logging = self.logger = self.handler = None
-        self._log_ready = False
+        # self._log_ready = False
 
         self.runtime_config_object = self.runtime_config = self.runtime_config_modified = None
 
@@ -63,15 +62,12 @@ class ErrorsiaVirusKillerLogic:
         self.Easter_Egg = 0
 
     # Bad
-    def set_log(self, log):
-        # self.logging = log['logging']
-        # self.logger = log['logger']
-        # self.file_handler = log['file_handler']
-        # Safer
-        self.logging = log.get('logging')
-        self.logger = log.get('logger')
-        self.handler = log.get('file_handler')
-        self._log_ready = all([self.logger, self.handler])
+    # def set_log(self, log):
+    #     # Safer
+    #     self.logging = log.get('logging')
+    #     self.logger = log.get('logger')
+    #     self.file_handler = log.get('file_handler')
+    #     self._log_ready = all([self.logger, self.file_handler])
     # End
 
     def initialization(self):
@@ -139,14 +135,13 @@ class ErrorsiaVirusKillerLogic:
         self.formatter = logging.Formatter(
             '%(asctime)s - %(pathname)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s')
 
-
         match self.runtime_config_object.read_condition:
             case RuntimeFunctionStatus.WARNING:
                 build_log = False
 
             case RuntimeFunctionStatus.SUCCESS:
                 log_config = self.runtime_config.get("logging")
-                print(id(log_config), id(self.runtime_config.get("logging")))
+                # print(id(log_config), id(self.runtime_config.get("logging")))
 
                 if log_config != {} and log_config:
 
@@ -157,7 +152,6 @@ class ErrorsiaVirusKillerLogic:
                         build_log = self.ask_enable_log()
                         log_config["enable_log"] = build_log
                         self.runtime_config_object.modified = True
-
 
                         print(self.runtime_config.get("logging"))
                 else:
@@ -174,7 +168,6 @@ class ErrorsiaVirusKillerLogic:
         self.initialization_logger_level(build_log)
 
     def set_log_dict(self):
-        print(123214123)
         # Create log dict
         self.runtime_config['logging'] = {}
         build_log = self.ask_enable_log()
@@ -188,10 +181,9 @@ class ErrorsiaVirusKillerLogic:
     @staticmethod
     def ask_enable_log():
         return tk.messagebox.askokcancel(
-                    title="Save log or not",
-                    message="Do you want to save log?\n你想要保存日志吗?"
-                )
-
+            title="Save log or not",
+            message="Do you want to save log?\n你想要保存日志吗?"
+        )
 
     def initialization_logger_level(self, build_log):
         if build_log:
@@ -204,66 +196,63 @@ class ErrorsiaVirusKillerLogic:
         self.handler.setFormatter(self.formatter)
         self.logger.addHandler(self.handler)
 
-
-###############################################################################################
-# Bad
-    def handle_log_config(self):
-        ask_enable_log = self.read_log_config()
-        match ask_enable_log:
-            case 1:
-                self.build_Log = True
-            case 0:
-                self.build_Log = False
-            case -1:
-                self.build_Log = tk.messagebox.askokcancel(
-                    title="Save log or not",
-                    message="Do you want to save log?\n你想要保存日志吗?"
-                )
-            case -2:
-                self.build_Log = False
-                # tk.messagebox.showerror("PermissionError")
-        self.write_log_config(self.build_Log)
-
-
-    # Config Module: Read & Check Config
-    def read_log_config(self):
-        config_path = f'{self.file_directory}/Config/VirusKiller_Configuration.Elysia'
-
-        # Try to read evk_build_ver_config
-        if not os.path.isfile(config_path):
-            return -1
-
-        try:
-            with open(config_path, "r", encoding="UTF-8") as file:
-                read_config = file.read()
-        except PermissionError:
-            return -2
-
-        enable_log = read_config[0]
-
-        if enable_log == "1":
-            return 1
-        elif enable_log == "0":
-            return 0
-        else:
-            return -1
-
-    def write_log_config(self, build_log):
-        log_cfg_content = 1 if build_log else 0
-        config_path = f'{self.file_directory}/Config/VirusKiller_Configuration.Elysia'
-
-        self.run_command(f"attrib -s -r -h {config_path}")
-        with open(f"{config_path}", "w", encoding="UTF-8") as file:
-            file.write(f"{log_cfg_content}")
-        self.run_command(f"attrib +s +r +h {config_path}")
-
-    def easy_clean_log(self):
-        # Create a bat to clean all the Logs
-        if not os.path.exists(f"{self.file_directory}/Log/Clean_Log.bat"):
-            with open(f"{self.file_directory}/Log/Clean_Log.bat", "w", encoding="UTF-8") as file:
-                file.write(f"del /f /q *.avk \ndel /f /q *.bat")
-
-###############################################################################################
+    ###############################################################################################
+    # Bad
+    # def handle_log_config(self):
+    #     ask_enable_log = self.read_log_config()
+    #     match ask_enable_log:
+    #         case 1:
+    #             self.build_Log = True
+    #         case 0:
+    #             self.build_Log = False
+    #         case -1:
+    #             self.build_Log = tk.messagebox.askokcancel(
+    #                 title="Save log or not",
+    #                 message="Do you want to save log?\n你想要保存日志吗?"
+    #             )
+    #         case -2:
+    #             self.build_Log = False
+    #             # tk.messagebox.showerror("PermissionError")
+    #     self.write_log_config(self.build_Log)
+    #
+    # # Config Module: Read & Check Config
+    # def read_log_config(self):
+    #     config_path = f'{self.file_directory}/Config/VirusKiller_Configuration.Elysia'
+    #
+    #     # Try to read evk_build_ver_config
+    #     if not os.path.isfile(config_path):
+    #         return -1
+    #
+    #     try:
+    #         with open(config_path, "r", encoding="UTF-8") as file:
+    #             read_config = file.read()
+    #     except PermissionError:
+    #         return -2
+    #
+    #     enable_log = read_config[0]
+    #
+    #     if enable_log == "1":
+    #         return 1
+    #     elif enable_log == "0":
+    #         return 0
+    #     else:
+    #         return -1
+    #
+    # def write_log_config(self, build_log):
+    #     log_cfg_content = 1 if build_log else 0
+    #     config_path = f'{self.file_directory}/Config/VirusKiller_Configuration.Elysia'
+    #
+    #     self.run_command(f"attrib -s -r -h {config_path}")
+    #     with open(f"{config_path}", "w", encoding="UTF-8") as file:
+    #         file.write(f"{log_cfg_content}")
+    #     self.run_command(f"attrib +s +r +h {config_path}")
+    #
+    # def easy_clean_log(self):
+    #     # Create a bat to clean all the Logs
+    #     if not os.path.exists(f"{self.file_directory}/Log/Clean_Log.bat"):
+    #         with open(f"{self.file_directory}/Log/Clean_Log.bat", "w", encoding="UTF-8") as file:
+    #             file.write(f"del /f /q *.avk \ndel /f /q *.bat")
+    ###############################################################################################
 
     # Check for updates
     def check_update(self):
@@ -325,7 +314,8 @@ class ErrorsiaVirusKillerLogic:
 
         local_update_config = self.runtime_config.get('app')
         if local_update_config:
-            if local_update_config.get('internal_version') and self.is_legal_version(local_update_config.get('internal_version')):
+            if local_update_config.get('internal_version') and self.is_legal_version(
+                    local_update_config.get('internal_version')):
                 return local_update_config.get('internal_version')
             else:
                 local_update_config['internal_version'] = evk_build_ver_config.INTERNAL_VERSION
@@ -334,9 +324,6 @@ class ErrorsiaVirusKillerLogic:
             self.runtime_config['app']['internal_version'] = evk_build_ver_config.INTERNAL_VERSION
             self.runtime_config_object.modified = True
         return -1
-
-
-
 
     # Check whether local_version is legal
     @staticmethod
@@ -381,7 +368,6 @@ class ErrorsiaVirusKillerLogic:
                 # DRIVE_REMOVABLE = 2
                 if drive_type == win32file.DRIVE_REMOVABLE:
                     drives.append(drive_letter)
-        # print(drives)
         return drives
 
     # Virus killer main module
@@ -393,7 +379,6 @@ class ErrorsiaVirusKillerLogic:
 
         for processes in virus_processes:
             self.taskkill_processes(processes)
-        # wintoast('Antivirus completed')
 
         self.handle_virus_files()
 
@@ -571,8 +556,6 @@ class ErrorsiaVirusKillerLogic:
             output_content = log_content
             self.set_insert(module_name, condition, output_content)
 
-        # wintoast('Repair Infected Files completed')
-
     # Call two functions
     def auto_kill(self):
         self.kill_viruses()
@@ -580,12 +563,6 @@ class ErrorsiaVirusKillerLogic:
 
     # Clean Screen Module: Clean Screen & Output
     def clean_button(self):
-
-        # # self.gui.evk_build_ver_config.set("Virus Killer")
-        # self.gui.evk_build_ver_config.set(evk_build_ver_config.FULL_VERSION)
-        # self.gui.output_text.configure(state='normal')
-        # self.gui.output_text.delete("1.0", tk.END)
-        # self.gui.output_text.configure(state='disabled')
         self.gui.main_widget.label_top.setText(evk_build_ver_config.FULL_VERSION)
         self.gui.main_widget.output_text.setText('')
         print('-' * 20)
@@ -599,12 +576,10 @@ class ErrorsiaVirusKillerLogic:
         elif self.Easter_Egg < 4:
             self.Easter_Egg += 1
         else:
-            # # self.gui.evk_build_ver_config.set("Copyright © 2024 - 2030 Errorsia")
-            # self.gui.evk_build_ver_config.set("Copyright (C) 2024 Errorsia")
-            self.gui.main_widget.label_top.setText("Copyright (C) 2024 Errorsia ")
+            self.gui.main_widget.label_top.setText("Copyright (C) 2025 Errorsia ")
 
             self.logger.debug('=' * 37)
-            self.logger.debug('Copyright 2024 Errorsia')
+            self.logger.debug('Copyright 2025 Errorsia')
             self.logger.debug('The Easter Egg was discovered by you!')
             self.logger.debug('Developer:\tErrorsia')
             self.logger.debug('Email:\tErrorsia@outlook.com')
@@ -670,9 +645,6 @@ class ErrorsiaVirusKillerLogic:
         minus_sign_quantity = '-' * 50
         output = f'{minus_sign_quantity} <b>{content}</b> {minus_sign_quantity}<br>'
 
-        # self.gui.output_text.configure(state='normal')
-        # self.gui.output_text.insert('end', output)
-        # self.gui.output_text.configure(state='disabled')
         self.gui.main_widget.output_text.append(output)
 
     def set_insert(self, module, condition, content):
@@ -682,9 +654,7 @@ class ErrorsiaVirusKillerLogic:
         condition = condition.upper()
 
         output = f'{current_time} | [{module}]\t|\t{condition}\t|\t{content}'
-        # self.gui.main_widget.output_text.configure(state='normal')
-        # self.gui.main_widget.output_text.insert('end', output)
-        # self.gui.main_widget.output_text.configure(state='disabled')
+
         self.gui.main_widget.output_text.append(output)
 
     def handle_close_event(self):
@@ -707,8 +677,7 @@ class ErrorsiaVirusKillerRuntimeConfig:
         self.read_condition = None
         self.write_condition = None
         self.condition = False
-        self.config_path = os.path.join(self.file_directory, 'Config', 'ErrorsiaVirusKillerConfig.evk4configtestv1') #evc
-
+        self.config_path = os.path.join(self.file_directory, 'Config', 'ErrorsiaVirusKillerConfig.evk4configtestv1')  # evc
 
     def flush_condition(self):
         # self.condition = all(cond == RuntimeConfigStatus.SUCCESS for cond in [self.read_condition, self.write_condition])
@@ -743,23 +712,16 @@ class ErrorsiaVirusKillerRuntimeConfig:
             with open(self.config_path, "rb") as runtime_config_file:
                 self.runtime_config_dict = tomllib.load(runtime_config_file)
 
-            # self.runtime_config_dict.update(tomllib.loads(str(config_raw)))
             self.read_condition = RuntimeFunctionStatus.SUCCESS
-            # return RuntimeConfigStatus.SUCCESS
         except PermissionError:
             self.read_condition = RuntimeFunctionStatus.WARNING
-            # return RuntimeConfigStatus.WARNING
         except tomllib.TOMLDecodeError:
             # Incorrect format of TOML file
-            # except tomllib.TOMLDecodeError as err:
-            # print('====')
-            # print(err, type(err))
             self.read_condition = RuntimeFunctionStatus.FAILURE
         except Exception as err:
             print(err, type(err))
             print('Invalid value' in err)
             self.read_condition = RuntimeFunctionStatus.WARNING
-            # return RuntimeConfigStatus.WARNING
         finally:
             self.flush_condition()
             print(self.read_condition)
