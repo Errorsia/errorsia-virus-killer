@@ -31,8 +31,6 @@
 Main module for Errorsia virus killer
 """
 
-# Update Log:
-
 # ⚠️ Important Notice: This is a Beta version. The programme is testing now.
 
 import sys
@@ -42,9 +40,9 @@ from PySide6.QtWidgets import QApplication
 import evk_build_config as evk_build_ver_config
 from gui.mainwindow import MainWindow
 # Private Libraries
-# from . import xyzvk_logic as logic_module
+# from . import evk_logic as logic_module
 # sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-# from .logic import xyzvk_logic as logic_module
+# from .logic import evk_logic as logic_module
 from logic import evk_logic as logic_module
 
 
@@ -78,7 +76,7 @@ class ErrorsiaVirusKillerApp:
 
         self.logger = self.logic.logger
         self.handler = self.logic.handler
-        self.build_Log = self.logic.build_Log
+        # self.build_Log = self.logic.build_Log
 
         # self.logic.set_log(self.log)
 
