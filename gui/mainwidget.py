@@ -14,7 +14,7 @@ class MainWidget(QWidget):
         # self.pool = QThreadPool()
         self.label1 = None
         self.debug_layout = self.debug_combobox1 = self.output_text = None
-        self.button1 = self.button2 = self.button3 = self.button4 = self.button5 = None
+        self.button1 = self.button2 = self.button3 = self.button4 = None
         self.widgets = None
 
         self.init_ui()
@@ -50,9 +50,6 @@ class MainWidget(QWidget):
 
         self.button4 = QPushButton("Clean Screen")
         self.button4.clicked.connect(self.logic.clean_button)
-
-        # self.button5 = QPushButton("Debugger")
-        # self.button5.clicked.connect(self.logic.debugger_button)
 
         # for i, btn in enumerate([self.button1, self.button2, self.button3, self.button4, self.button5]):
         for i, btn in enumerate([self.button1, self.button2, self.button3, self.button4]):
@@ -120,8 +117,6 @@ class MainWidget(QWidget):
         self.debug_layout.addLayout(log_selector_layout)
         layout.addLayout(self.debug_layout)
 
-        # self.widgets = [
-        #     self.button1, self.button2, self.button3, self.button4, self.button5, self.log_level_combobox]
         self.widgets = [
             self.button1, self.button2, self.button3, self.button4, self.debug_combobox1]
 
