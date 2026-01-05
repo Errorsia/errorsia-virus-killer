@@ -14,10 +14,10 @@ class MainWindow(QMainWindow):
 
         self.initialization_window()
 
-        # 设置 icon
+        # Set icon
         self.set_icon()
 
-        # 设置 central widget
+        # Set central widget
         self.main_widget = MainWidget(var, logic)
         self.setCentralWidget(self.main_widget)
 
