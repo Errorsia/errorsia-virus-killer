@@ -21,7 +21,7 @@ Config of Errorsia virus killer
 """
 
 
-# Code Name List:
+# Name List of Egos:
 # Kevin,
 # Elysia,
 # Aponia,
@@ -36,8 +36,20 @@ Config of Errorsia virus killer
 # Hua,
 # Pardofelis
 
+
+# Code Name List:
+# Elysia,
+# Aponia,
+# Eden,
+# Vill-V,
+# Sakura,
+# Mobius,
+# Griseo,
+# Hua,
+# Pardofelis
+
 PROGRAMME_NAME = 'Errorsia Virus Killer'
-MAJOR_VER, MINOR_VER, PATCH_VER = 4,2,2
+MAJOR_VER, MINOR_VER, PATCH_VER = 4, 2, 3
 VERSION = f'{MAJOR_VER}.{MINOR_VER}.{PATCH_VER}'
 FULL_VERSION = f'{PROGRAMME_NAME} V{VERSION}'
 INTERNAL_VERSION = '%03d%03d%03d' % (MAJOR_VER, MINOR_VER, PATCH_VER)
