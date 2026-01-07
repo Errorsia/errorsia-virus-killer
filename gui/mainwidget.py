@@ -6,9 +6,9 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 
 class MainWidget(QWidget):
-    def __init__(self, var, logic):
+    def __init__(self, evk_build_ver_config, logic):
         super().__init__()
-        self.var = var
+        self.evk_build_ver_config = evk_build_ver_config
         self.logic = logic
         self.build_log = self.logic.build_Log
         # self.pool = QThreadPool()
@@ -24,7 +24,7 @@ class MainWidget(QWidget):
 
         # 顶部标签
         self.label1 = QLabel()
-        self.label1.setText(self.var)
+        self.label1.setText(self.evk_build_ver_config.FULL_VERSION)
         # self.label_top.setAlignment(Qt.AlignCenter)
         # 这行代码的意思是将 label_top（一个标签控件）中的文字居中对齐，也就是让文字在标签中水平和垂直方向都处于中间位置。
         self.label1.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -123,25 +123,21 @@ class MainWidget(QWidget):
         self.setLayout(layout)
 
     def kill_virus_main(self):
-        print("Virus killing logic should run here")
+        print("Virus killing logic")
         self.disable_widgets()
         QApplication.processEvents()
 
-        # self.evk_build_ver_config.set('Killing Virus Processes')
         self.label1.update()
 
         self.logic.kill_viruses()
 
         self.enable_widgets()
 
-        # self.evk_build_ver_config.set("FINISH")
-
     def auto_kill_main(self):
         print("Auto kill action triggered")
         self.disable_widgets()
         QApplication.processEvents()
 
-        # self.evk_build_ver_config.set('Auto Kill')
         self.label1.setText('Auto Kill')
         self.label1.update()
         QApplication.processEvents()
