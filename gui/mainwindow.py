@@ -8,17 +8,20 @@ from .mainwidget import MainWidget
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, var, logger, logic):
+    def __init__(self, evk_build_ver_config, logger, logic):
         super().__init__()
-        self.var = var
+
+        self.evk_build_ver_config = evk_build_ver_config
 
         self.initialization_window()
 
         # Set icon
         self.set_icon()
 
+        print(evk_build_ver_config, self.evk_build_ver_config)
+
         # Set central widget
-        self.main_widget = MainWidget(var, logic)
+        self.main_widget = MainWidget(evk_build_ver_config, logic)
         self.setCentralWidget(self.main_widget)
 
         self.logger = logger
@@ -32,7 +35,7 @@ class MainWindow(QMainWindow):
         event.accept()
 
     def initialization_window(self):
-        self.setWindowTitle(self.var)
+        self.setWindowTitle(self.evk_build_ver_config.FULL_VERSION)
         # self.setMinimumSize(1360, 720)
         # self.resize(1360, 720)
         self.setMinimumSize(960, 540)
