@@ -31,7 +31,7 @@
 Main module for Errorsia virus killer
 """
 
-# ⚠️ Important Notice: This is a Beta version. The programme is testing now.
+# IMPORTANT NOTICE: This is a Test version. The programme is testing now.
 
 import sys
 
@@ -54,39 +54,14 @@ class ErrorsiaVirusKillerApp:
 
         self.logic.initialization()
 
-        # Get the value of the environment variable %appdata%
-        # self.appdata = self.logic.appdata
-        # Get evk_build_ver_config and log directory
-        # self.file_directory = self.logic.file_directory
-
-        # self.logger = logging.getLogger(__name__)
-        # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
-        #
-        # self.file_formatter = logging.Formatter(
-        #     '%(asctime)s - %(pathname)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s')
-
-        # self.log = {
-        #     'logging': logging,
-        #     'logger': self.logger,
-        #     'file_handler': self.file_handler
-        # }
-
-        # self.handle_log_config()
-        # self.initialization_logger_level()
-
         self.logger = self.logic.logger
         self.handler = self.logic.handler
-        # self.build_Log = self.logic.build_Log
 
-        # self.logic.set_log(self.log)
-
-        # self.logic.easy_clean_log()
-
-        ver_text = evk_build_ver_config.FULL_VERSION if hasattr(evk_build_ver_config,
-                                                                'FULL_VERSION') else "Errorsia Virus Killer"
+        # ver_text = evk_build_ver_config.FULL_VERSION if hasattr(evk_build_ver_config,
+        #                                                         'FULL_VERSION') else "Errorsia Virus Killer"
 
         self.app = QApplication(sys.argv)
-        self.user_interface = MainWindow(ver_text, self.logger, self.logic)
+        self.user_interface = MainWindow(evk_build_ver_config ,self.logger, self.logic)
 
         self.logger.info('Successfully initialized gui module')
 
@@ -95,34 +70,6 @@ class ErrorsiaVirusKillerApp:
 
         self.user_interface.show()
         sys.exit(self.app.exec())
-
-    # def initialization_logger_level(self):
-    #     if self.build_Log:
-    #         self.file_handler.setLevel(logging.DEBUG)
-    #         self.logger.setLevel(level=logging.DEBUG)
-    #     else:
-    #         self.file_handler.setLevel(100)
-    #         self.logger.setLevel(100)
-    #
-    #     self.file_handler.setFormatter(self.file_formatter)
-    #     self.logger.addHandler(self.file_handler)
-    #
-    # def handle_log_config(self):
-    #     ask_enable_log = self.logic.read_log_config()
-    #     match ask_enable_log:
-    #         case 1:
-    #             self.build_Log = True
-    #         case 0:
-    #             self.build_Log = False
-    #         case -1:
-    #             self.build_Log = tk.messagebox.askokcancel(
-    #                 title="Save log or not",
-    #                 message="Do you want to save log?\n你想要保存日志吗?"
-    #             )
-    #         case -2:
-    #             self.build_Log = False
-    #             # tk.messagebox.showerror("PermissionError")
-    #     self.logic.write_log_config(self.build_Log)
 
 
 if __name__ == '__main__':
