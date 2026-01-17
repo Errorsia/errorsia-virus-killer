@@ -491,7 +491,7 @@ class ErrorsiaVirusKillerLogic:
 
     # Clean Screen Module: Clean Screen & Output
     def clean_button(self):
-        self.gui.main_widget.label1.setText(evk_build_ver_config.FULL_VERSION)
+        self.gui.main_widget.label_top.setText(self.evk_build_ver_config.FULL_VERSION)
         self.gui.main_widget.output_text.setText('')
 
         self.easter_egg()
@@ -503,7 +503,7 @@ class ErrorsiaVirusKillerLogic:
         elif self.Easter_Egg < 4:
             self.Easter_Egg += 1
         else:
-            self.gui.main_widget.label1.setText("Copyright (C) 2025 Errorsia ")
+            self.gui.main_widget.label_top.setText("Copyright (C) 2025 Errorsia ")
 
             self.logger.debug('=' * 37)
             self.logger.debug('Copyright (C) 2025 Errorsia')

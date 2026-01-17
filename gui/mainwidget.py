@@ -12,7 +12,7 @@ class MainWidget(QWidget):
         self.logic = logic
         self.build_log = self.logic.build_Log
         # self.pool = QThreadPool()
-        self.label1 = None
+        self.label_top = None
         self.debug_layout = self.debug_combobox1 = self.output_text = None
         self.button1 = self.button2 = self.button3 = self.button4 = None
         self.widgets = None
@@ -23,18 +23,18 @@ class MainWidget(QWidget):
         layout = QVBoxLayout()
 
         # 顶部标签
-        self.label1 = QLabel()
-        self.label1.setText(self.evk_build_ver_config.FULL_VERSION)
+        self.label_top = QLabel()
+        self.label_top.setText(self.evk_build_ver_config.FULL_VERSION)
         # self.label_top.setAlignment(Qt.AlignCenter)
         # 这行代码的意思是将 label_top（一个标签控件）中的文字居中对齐，也就是让文字在标签中水平和垂直方向都处于中间位置。
-        self.label1.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.label1.setStyleSheet("""
+        self.label_top.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_top.setStyleSheet("""
             background-color: lightcyan; 
             border-radius: 8px;
             font-size: 40px;
             """)
-        self.label1.setMinimumHeight(100)
-        layout.addWidget(self.label1)
+        self.label_top.setMinimumHeight(100)
+        layout.addWidget(self.label_top)
 
         # 按钮区域
         button_layout = QGridLayout()
@@ -127,7 +127,7 @@ class MainWidget(QWidget):
         self.disable_widgets()
         QApplication.processEvents()
 
-        self.label1.update()
+        self.label_top.update()
 
         self.logic.kill_viruses()
 
@@ -138,15 +138,15 @@ class MainWidget(QWidget):
         self.disable_widgets()
         QApplication.processEvents()
 
-        self.label1.setText('Auto Kill')
-        self.label1.update()
+        self.label_top.setText('Auto Kill')
+        self.label_top.update()
         QApplication.processEvents()
 
         self.logic.auto_kill()
 
         self.enable_widgets()
 
-        self.label1.setText("FINISH")
+        self.label_top.setText("FINISH")
 
     def debug_combobox_on_select(self, index):
         level = self.debug_combobox1.currentText()
