@@ -36,14 +36,15 @@ import win32api
 import win32file
 
 # Mudules
-import evk_build_config as evk_build_ver_config
+# from evk4_2_4 import evk_build_config as self.evk_build_ver_config
 
 
 class ErrorsiaVirusKillerLogic:
-    def __init__(self, gui):
+    def __init__(self, evk_build_ver_config):
         self.build_Log = None
         self.formatter = None
-        self.gui = gui
+        self.gui = None
+        self.evk_build_ver_config = evk_build_ver_config
         self.logging = self.logger = self.handler = None
 
         self.runtime_config_object = self.runtime_config = None

@@ -50,15 +50,12 @@ class ErrorsiaVirusKillerApp:
     def __init__(self):
         # self.build_Log = None
 
-        self.logic = logic_module.ErrorsiaVirusKillerLogic(gui=None)
+        self.logic = logic_module.ErrorsiaVirusKillerLogic(evk_build_ver_config)
 
         self.logic.initialization()
 
         self.logger = self.logic.logger
         self.handler = self.logic.handler
-
-        # ver_text = evk_build_ver_config.FULL_VERSION if hasattr(evk_build_ver_config,
-        #                                                         'FULL_VERSION') else "Errorsia Virus Killer"
 
         self.app = QApplication(sys.argv)
         self.user_interface = MainWindow(evk_build_ver_config ,self.logger, self.logic)
