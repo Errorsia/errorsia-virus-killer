@@ -102,7 +102,15 @@ class ErrorsiaVirusKillerLogic:
         self.runtime_config_object = ErrorsiaVirusKillerRuntimeConfig(self.file_directory)
         self.runtime_config_object.read_and_analysis_config()
         self.runtime_config = self.runtime_config_object.runtime_config_dict
-        print(self.runtime_config)
+        self.set_default_config_value()
+
+    def set_default_config_value(self):
+        option_name = [
+            'app',
+            'logging'
+        ]
+        for tmp_option_name in option_name:
+            self.runtime_config.setdefault(tmp_option_name, {})
 
     @staticmethod
     def run_command(command):
@@ -188,7 +196,7 @@ class ErrorsiaVirusKillerLogic:
 
     # Check for updates
     def check_update(self):
-        internal_version = int(evk_build_ver_config.INTERNAL_VERSION)
+        internal_version = int(self.evk_build_ver_config.INTERNAL_VERSION)
         online_update_version = -1
         local_update_version = int(self.get_local_version())
 
@@ -249,10 +257,11 @@ class ErrorsiaVirusKillerLogic:
                     local_update_config.get('internal_version')):
                 return local_update_config.get('internal_version')
             else:
-                local_update_config['internal_version'] = evk_build_ver_config.INTERNAL_VERSION
+                self.runtime_config_object.modified = True
+                local_update_config['internal_version'] = self.evk_build_ver_config.INTERNAL_VERSION
         else:
             self.runtime_config['app'] = {}
-            self.runtime_config['app']['internal_version'] = evk_build_ver_config.INTERNAL_VERSION
+            self.runtime_config['app']['internal_version'] = self.evk_build_ver_config.INTERNAL_VERSION
             self.runtime_config_object.modified = True
         return -1
 
@@ -648,4 +657,5 @@ class ErrorsiaVirusKillerRuntimeConfig:
                     return self.write_condition
         else:
             self.write_condition = RuntimeFunctionStatus.SUCCESS
-            self.flush_condition()
+
+        self.flush_condition()
