@@ -139,7 +139,6 @@ class ErrorsiaVirusKillerLogic:
 
             case RuntimeFunctionStatus.SUCCESS:
                 log_config = self.runtime_config.get("logging")
-                # print(id(log_config), id(self.runtime_config.get("logging")))
 
                 if log_config != {} and log_config:
 
@@ -151,7 +150,7 @@ class ErrorsiaVirusKillerLogic:
                         log_config["enable_log"] = build_log
                         self.runtime_config_object.modified = True
 
-                        print(self.runtime_config.get("logging"))
+                        # print(self.runtime_config.get("logging"))
                 else:
                     build_log = self.set_log_dict()
 
@@ -167,12 +166,10 @@ class ErrorsiaVirusKillerLogic:
 
     def set_log_dict(self):
         # Create log dict
-        self.runtime_config['logging'] = {}
+        # self.runtime_config['logging'] = {}
         build_log = self.ask_enable_log()
         # self.runtime_config['logging']['enable_log'] = build_log
-        print(self.runtime_config)
         self.runtime_config['logging'].update({'enable_log': build_log})
-        print(self.runtime_config)
         self.runtime_config_object.modified = True
         return build_log
 
@@ -233,20 +230,6 @@ class ErrorsiaVirusKillerLogic:
 
         sys.exit('UPDATE AVAILABLE')
 
-    # def local_update_old(self):
-    #     if os.path.exists(f'{self.file_directory}/Config/Local_Update.Elysia'):
-    #
-    #         with open(f'{self.file_directory}/Config/Local_Update.Elysia', 'r') as local_update_config:
-    #             local_version = local_update_config.read()
-    #
-    #         if self.is_legal_version(local_version):
-    #
-    #             if int(evk_build_ver_config.INTERNAL_VERSION) <= int(local_version):
-    #                 return local_version
-    #
-    #     self.build_local_update_config()
-    #     return -1
-
     def get_local_version(self):
         if self.runtime_config_object.read_condition == RuntimeFunctionStatus.WARNING:
             return -1
@@ -268,21 +251,12 @@ class ErrorsiaVirusKillerLogic:
     # Check whether local_version is legal
     @staticmethod
     def is_legal_version(local_version):
-        # local_version = str(local_version) Why can it be non-str evk_build_ver_config?
+        # local_version = str(local_version) Why can it be non-str?
 
         # if len(local_version) != 9:
         #     return False
         # return local_version.isdigit()
         return len(local_version) == 9 and local_version.isdigit()
-
-    # def build_local_update_config(self):
-    #     if os.path.exists(f'{self.file_directory}/Config/Local_Update.Elysia'):
-    #         self.run_command(f'attrib -r -h {self.file_directory}/Config/Local_Update.Elysia')
-    #
-    #     with open(f'{self.file_directory}/Config/Local_Update.Elysia', 'w', encoding="UTF-8") as local_version:
-    #         local_version.write(evk_build_ver_config.INTERNAL_VERSION)
-    #
-    #     self.run_command(f'attrib +r +h {self.file_directory}/Config/Local_Update.Elysia')
 
     @staticmethod
     def get_removable_drives():
@@ -588,7 +562,6 @@ class ErrorsiaVirusKillerRuntimeConfig:
         self.condition = self.all_success(
             self.read_condition,
             self.write_condition,
-            # self.execute_condition
         )
 
     @staticmethod
@@ -630,7 +603,6 @@ class ErrorsiaVirusKillerRuntimeConfig:
             self.read_condition = RuntimeFunctionStatus.WARNING
         finally:
             self.flush_condition()
-            print(self.read_condition)
             self.runtime_config_dict_original = deepcopy(self.runtime_config_dict)
 
             return self.read_condition
@@ -653,7 +625,6 @@ class ErrorsiaVirusKillerRuntimeConfig:
                 except Exception:
                     self.write_condition = RuntimeFunctionStatus.WARNING
                 finally:
-                    self.flush_condition()
                     return self.write_condition
         else:
             self.write_condition = RuntimeFunctionStatus.SUCCESS
