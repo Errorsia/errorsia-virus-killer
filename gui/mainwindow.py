@@ -18,8 +18,6 @@ class MainWindow(QMainWindow):
         # Set icon
         self.set_icon()
 
-        print(evk_build_ver_config, self.evk_build_ver_config)
-
         # Set central widget
         self.main_widget = MainWidget(evk_build_ver_config, logic)
         self.setCentralWidget(self.main_widget)
