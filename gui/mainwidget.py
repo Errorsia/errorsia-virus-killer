@@ -125,28 +125,29 @@ class MainWidget(QWidget):
     def kill_virus_main(self):
         print("Virus killing logic")
         self.disable_widgets()
+
+        self.label_top.setText('Killing')
         QApplication.processEvents()
 
-        self.label_top.update()
-
         self.logic.kill_viruses()
+
+        self.label_top.setText("FINISH")
 
         self.enable_widgets()
 
     def auto_kill_main(self):
         print("Auto kill action triggered")
         self.disable_widgets()
-        QApplication.processEvents()
 
         self.label_top.setText('Auto Kill')
-        self.label_top.update()
+        # self.label_top.update()
         QApplication.processEvents()
 
         self.logic.auto_kill()
 
-        self.enable_widgets()
-
         self.label_top.setText("FINISH")
+
+        self.enable_widgets()
 
     def debug_combobox_on_select(self, index):
         level = self.debug_combobox1.currentText()
@@ -156,6 +157,7 @@ class MainWidget(QWidget):
         for widget in self.widgets:
             widget.setDisabled(True)
             # widget.setEnabled(False)
+        QApplication.processEvents()
 
     def enable_widgets(self):
         for widget in self.widgets:
