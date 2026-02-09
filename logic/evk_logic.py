@@ -35,21 +35,15 @@ import tomli_w
 import win32api
 import win32file
 
-# Mudules
-# from evk4_2_4 import evk_build_config as self.evk_build_ver_config
-
 
 class ErrorsiaVirusKillerLogic:
     def __init__(self, evk_build_ver_config):
         self.build_Log = None
-        self.formatter = None
         self.gui = None
         self.evk_build_ver_config = evk_build_ver_config
-        self.logging = self.logger = self.handler = None
+        self.logging = self.logger = self.formatter = self.handler = None
 
         self.runtime_config_object = self.runtime_config = None
-
-        self.disable_debug_frame = True
 
         # Get the value of the environment variable %appdata%
         self.appdata = os.getenv("APPDATA")
@@ -58,7 +52,7 @@ class ErrorsiaVirusKillerLogic:
 
         # Whether show Easter Egg
         # Current condition: On (If Easter_Egg_Index < 0, it's Off)
-        self.Easter_Egg = 0
+        self.Easter_Egg_Index = 0
 
     def initialization(self):
         self.check_operate_system()
@@ -102,6 +96,7 @@ class ErrorsiaVirusKillerLogic:
         self.runtime_config_object = ErrorsiaVirusKillerRuntimeConfig(self.file_directory)
         self.runtime_config_object.read_and_analysis_config()
         self.runtime_config = self.runtime_config_object.runtime_config_dict
+        print(self.runtime_config)
         self.set_default_config_value()
 
     def set_default_config_value(self):
@@ -127,7 +122,8 @@ class ErrorsiaVirusKillerLogic:
         self.logger = logging.getLogger(__name__)
         # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
         self.handler = logging.FileHandler(
-            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv1')
+            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv1'),
+            encoding='utf=8'
         )
 
         self.formatter = logging.Formatter(
@@ -150,7 +146,6 @@ class ErrorsiaVirusKillerLogic:
                         log_config["enable_log"] = build_log
                         self.runtime_config_object.modified = True
 
-                        # print(self.runtime_config.get("logging"))
                 else:
                     build_log = self.set_log_dict()
 
@@ -168,7 +163,6 @@ class ErrorsiaVirusKillerLogic:
         # Create log dict
         # self.runtime_config['logging'] = {}
         build_log = self.ask_enable_log()
-        # self.runtime_config['logging']['enable_log'] = build_log
         self.runtime_config['logging'].update({'enable_log': build_log})
         self.runtime_config_object.modified = True
         return build_log
@@ -472,10 +466,10 @@ class ErrorsiaVirusKillerLogic:
 
     # Easter_Egg_Index module
     def easter_egg(self):
-        if self.Easter_Egg < 0:
+        if self.Easter_Egg_Index < 0:
             pass
-        elif self.Easter_Egg < 4:
-            self.Easter_Egg += 1
+        elif self.Easter_Egg_Index < 4:
+            self.Easter_Egg_Index += 1
         else:
             self.gui.main_widget.label_top.setText("Copyright (C) 2025 Errorsia ")
 
@@ -486,16 +480,8 @@ class ErrorsiaVirusKillerLogic:
             self.logger.debug('Email:\tErrorsia@outlook.com')
             self.logger.debug('=' * 37)
 
-            self.Easter_Egg = 0
+            self.Easter_Egg_Index = 0
 
-    # None used
-    def debugger_button(self):
-        if self.disable_debug_frame:
-            self.gui.main_widget.settings_page_layout.hide()
-            self.disable_debug_frame = False
-        else:
-            self.gui.main_widget.settings_page_layout.show()
-            self.disable_debug_frame = True
 
     # Get the value of the combobox automatically and set the level of the logger & file_handler
     # noinspection PyUnusedLocal
@@ -546,8 +532,6 @@ class RuntimeFunctionStatus(Enum):
 
 class ErrorsiaVirusKillerRuntimeConfig:
     def __init__(self, file_directory):
-        # self.runtime_config_dict = {}
-        # self.runtime_config_dict_original_backup = None
         self.runtime_config_dict = {}
         self.runtime_config_dict_original = {}
         self.modified = False
@@ -558,7 +542,8 @@ class ErrorsiaVirusKillerRuntimeConfig:
         self.config_path = os.path.join(self.file_directory, 'Config', 'ErrorsiaVirusKillerConfig.evk4configtestv1')  # evc
 
     def flush_condition(self):
-        # self.condition = all(cond == RuntimeConfigStatus.SUCCESS for cond in [self.read_condition, self.write_condition])
+        # self.condition = all(
+        # cond == RuntimeConfigStatus.SUCCESS for cond in [self.read_condition, self.write_condition])
         self.condition = self.all_success(
             self.read_condition,
             self.write_condition,
@@ -579,12 +564,10 @@ class ErrorsiaVirusKillerRuntimeConfig:
         """
         if not os.path.exists(self.config_path):
             self.read_condition = RuntimeFunctionStatus.FAILURE
-            # self.runtime_config_dict_original_backup = deepcopy(self.runtime_config_dict)
             return RuntimeFunctionStatus.FAILURE
         if os.path.getsize(self.config_path) > 8192:
             # Normally, config won't be that large
             self.read_condition = RuntimeFunctionStatus.FAILURE
-            # self.runtime_config_dict_original_backup = deepcopy(self.runtime_config_dict)
             return RuntimeFunctionStatus.FAILURE
         # noinspection PyBroadException
         try:
@@ -598,7 +581,7 @@ class ErrorsiaVirusKillerRuntimeConfig:
         except tomllib.TOMLDecodeError:
             # Incorrect format of TOML file
             self.read_condition = RuntimeFunctionStatus.FAILURE
-            self.modified = True # 保险起见
+            self.modified = True  # 保险起见
         except Exception:
             self.read_condition = RuntimeFunctionStatus.WARNING
         finally:
