@@ -230,9 +230,14 @@ class ErrorsiaVirusKillerLogic:
 
         local_update_config = self.runtime_config.get('app')
         if local_update_config:
-            if local_update_config.get('internal_version') and self.is_legal_version(
-                    local_update_config.get('internal_version')):
-                return local_update_config.get('internal_version')
+
+            internal_version_in_cfg = local_update_config.get('internal_version')
+
+            if internal_version_in_cfg and self.is_legal_version(internal_version_in_cfg):
+                if int(internal_version_in_cfg) < int(self.evk_build_ver_config.INTERNAL_VERSION):
+                    local_update_config['internal_version'] = self.evk_build_ver_config.INTERNAL_VERSION
+                    self.runtime_config_object.modified = True
+                return internal_version_in_cfg
             else:
                 self.runtime_config_object.modified = True
                 local_update_config['internal_version'] = self.evk_build_ver_config.INTERNAL_VERSION
@@ -247,10 +252,10 @@ class ErrorsiaVirusKillerLogic:
     def is_legal_version(local_version):
         # local_version = str(local_version) Why can it be non-str?
 
-        # if len(local_version) != 9:
-        #     return False
-        # return local_version.isdigit()
-        return len(local_version) == 9 and local_version.isdigit()
+        if len(local_version) != 9:
+            return False
+        return local_version.isdigit()
+        # return len(local_version) == 9 and local_version.isdigit()
 
     @staticmethod
     def get_removable_drives():
@@ -261,8 +266,8 @@ class ErrorsiaVirusKillerLogic:
                 drive_letter = f"{chr(65 + i)}"
                 drive_path = f"{chr(65 + i)}:\\"
                 drive_type = win32file.GetDriveType(drive_path)
-                # DRIVE_REMOVABLE = 2
-                if drive_type == win32file.DRIVE_REMOVABLE:
+
+                if drive_type == win32file.DRIVE_REMOVABLE: # DRIVE_REMOVABLE = 2
                     drives.append(drive_letter)
         return drives
 
@@ -408,8 +413,6 @@ class ErrorsiaVirusKillerLogic:
 
                 if result_repair_infected_folder == 0 and os.path.exists(infected_folder_path):
                     # os.rename(infected_folder_path, f'{disk}:\\Files Hidden by Viruses')
-                    # os.rename(infected_folder_path, f'{disk}:\\被病毒隐藏的文件')
-
                     # self.logger.info(f'Infected folder in {disk}-disk has been renamed')
                     # condition_list.append('success')
                     # log_content_list.append(f'Infected folder in {disk}-disk was renamed')
