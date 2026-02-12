@@ -41,7 +41,7 @@ class ErrorsiaVirusKillerLogic:
         self.build_Log = None
         self.gui = None
         self.evk_build_ver_config = evk_build_ver_config
-        self.logging = self.logger = self.formatter = self.handler = None
+        self.logger = self.formatter = self.handler = None
 
         self.runtime_config_object = self.runtime_config = None
 
@@ -489,22 +489,24 @@ class ErrorsiaVirusKillerLogic:
     # Get the value of the combobox automatically and set the level of the logger & file_handler
     # noinspection PyUnusedLocal
     def set_log_level(self, level_index):
+        print(1)
         if level_index > 5 or level_index < 0:
             # This won't happen, I think.
-            self.handler.setLevel(self.logging.INFO)
-            self.logger.setLevel(level=self.logging.INFO)
+            self.handler.setLevel(logging.INFO)
+            self.logger.setLevel(level=logging.INFO)
 
         logging_level = [
-            self.logging.DEBUG,
-            self.logging.INFO,
-            self.logging.WARNING,
-            self.logging.ERROR,
-            self.logging.CRITICAL,
-            100
+            logging.DEBUG,
+            logging.INFO,
+            logging.WARNING,
+            logging.ERROR,
+            logging.CRITICAL,
+            100 # SILENT
         ]
 
         self.handler.setLevel(logging_level[level_index])
         self.logger.setLevel(level=logging_level[level_index])
+        print(1)
 
     def set_insert_simplified(self, content):
         minus_sign_quantity = '-' * 50
