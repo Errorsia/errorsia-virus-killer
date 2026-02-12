@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
         # self.setMaximumSize(3840, 2160)
 
     def set_icon(self):
-        image_data = base64.b64decode(images.icon)  # 这是你的 .ico 文件的 base64
+        image_data = base64.b64decode(images.b64_icon)  # 这是你的 .ico 文件的 base64
         qt_pixmap = QPixmap()
         qt_pixmap.loadFromData(image_data)  # 不指定格式，让 Qt 自动识别
         self.setWindowIcon(QIcon(qt_pixmap))
