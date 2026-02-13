@@ -1,1 +1,2 @@
-修复配置文件-本地更新中版本号不能正常更新的问题
+修复了错误将logging库设为类属性的问题
+修复了debug_combobox_on_select没有调用set_log_level导致无法切换日志记录器等级的问题
