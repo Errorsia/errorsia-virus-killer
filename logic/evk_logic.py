@@ -96,7 +96,7 @@ class ErrorsiaVirusKillerLogic:
         self.runtime_config_object = ErrorsiaVirusKillerRuntimeConfig(self.file_directory)
         self.runtime_config_object.read_and_analysis_config()
         self.runtime_config = self.runtime_config_object.runtime_config_dict
-        print(self.runtime_config)
+        # print(self.runtime_config)
         self.set_default_config_value()
 
     def set_default_config_value(self):
@@ -392,12 +392,12 @@ class ErrorsiaVirusKillerLogic:
                         log_content_list.append(f'The attribute of the Infected folder cannot be changed')
 
                 if os.path.exists(f'{disk}:\\ \\desktop.ini'):
-                    result_change_attrib_of_virus_files = self.subprocess_run(
+                    result_change_virus_files_attrib = self.subprocess_run(
                         ['attrib', '-s', '-h', '-R', f'{disk}:\\ \\desktop.ini', "/d"])
 
-                    if result_change_attrib_of_virus_files.returncode == 0:
+                    if result_change_virus_files_attrib.returncode == 0:
                         self.logger.info(
-                            f'The attribute of the virus file ({disk}:\\xa0\\desktop.ini) has been changed (Return {result_change_attrib_of_virus_files})')
+                            f'The attribute of the virus file ({disk}:\\xa0\\desktop.ini) has been changed (Return {result_change_virus_files_attrib})')
                         condition_list.append('success')
                         log_content_list.append(f'The attribute of the virus file in {disk}-disk was changed')
 
@@ -489,7 +489,6 @@ class ErrorsiaVirusKillerLogic:
     # Get the value of the combobox automatically and set the level of the logger & file_handler
     # noinspection PyUnusedLocal
     def set_log_level(self, level_index):
-        print(1)
         if level_index > 5 or level_index < 0:
             # This won't happen, I think.
             self.handler.setLevel(logging.INFO)
@@ -506,7 +505,8 @@ class ErrorsiaVirusKillerLogic:
 
         self.handler.setLevel(logging_level[level_index])
         self.logger.setLevel(level=logging_level[level_index])
-        print(1)
+
+        self.logger.info(f'Log index set to {level_index}')
 
     def set_insert_simplified(self, content):
         minus_sign_quantity = '-' * 50
@@ -596,7 +596,7 @@ class ErrorsiaVirusKillerRuntimeConfig:
             return self.read_condition
 
     def auto_decide_write_config(self):
-        print(self.modified)
+        # print(self.modified)
         if self.modified or self.runtime_config_dict != self.runtime_config_dict_original:
             if self.runtime_config_dict == {}:
                 self.write_condition = RuntimeFunctionStatus.WARNING
@@ -618,3 +618,5 @@ class ErrorsiaVirusKillerRuntimeConfig:
             self.write_condition = RuntimeFunctionStatus.SUCCESS
 
         self.flush_condition()
+
+        return self.write_condition
