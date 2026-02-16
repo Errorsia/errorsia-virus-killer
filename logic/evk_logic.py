@@ -57,7 +57,10 @@ class ErrorsiaVirusKillerLogic:
     def initialization(self):
         self.check_operate_system()
 
-        self.run_command('chcp 65001')
+
+        # print(self.subprocess_run(['chcp']))
+        self.subprocess_run(['chcp', '65001'])
+        # print(self.subprocess_run(['chcp']))
 
         self.check_path()
 
@@ -107,10 +110,10 @@ class ErrorsiaVirusKillerLogic:
         for tmp_option_name in option_name:
             self.runtime_config.setdefault(tmp_option_name, {})
 
-    @staticmethod
-    def run_command(command):
-        return subprocess.call(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
+    # @staticmethod
+    # def run_command(command):
+    #     return subprocess.call(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    #                            stderr=subprocess.PIPE)
 
     @staticmethod
     def subprocess_run(command):
@@ -286,27 +289,29 @@ class ErrorsiaVirusKillerLogic:
     # Virus killer module: Taskkill virus processes
     def taskkill_processes(self, process_name):
         module_name = 'taskkill_processes'
-        result_taskkill = self.run_command(f"TASKKILL -F -IM {process_name} -T")
+        # result_taskkill = self.run_command(f"TASKKILL -F -IM {process_name} -T")
+        result_taskkill = self.subprocess_run(['TASKKILL', '-F', '-IM', process_name, '-T'])
+        taskkill_returncode = result_taskkill.returncode
 
-        if result_taskkill == 0:
+        if taskkill_returncode == 0:
             condition = 'success'
             output_content = f'The process has been terminated'
-            self.logger.info(f'The process ({process_name}) has been terminated (Return code {result_taskkill})')
+            self.logger.info(f'The process ({process_name}) has been terminated (Return code {taskkill_returncode})')
 
-        elif result_taskkill == 128:
+        elif taskkill_returncode == 128:
             condition = 'failed'
             output_content = f'The process not found'
-            self.logger.warning(f'The process ({process_name}) not found (Return code {result_taskkill})')
+            self.logger.warning(f'The process ({process_name}) not found (Return code {taskkill_returncode})')
 
-        elif result_taskkill == 1:
+        elif taskkill_returncode == 1:
             condition = 'failed'
             output_content = 'The process could not be terminated'
-            self.logger.warning(f'The process ({process_name}) could not be terminated (Return code {result_taskkill})')
+            self.logger.warning(f'The process ({process_name}) could not be terminated (Return code {taskkill_returncode})')
 
         else:
             condition = 'failed'
             output_content = 'Unknown Error: Please tell developers!!'
-            self.logger.warning(f'Unknown Error (Return code {result_taskkill})')
+            self.logger.warning(f'Unknown Error (Return code {taskkill_returncode})')
 
         self.set_insert(module_name, condition, output_content)
 
@@ -378,7 +383,7 @@ class ErrorsiaVirusKillerLogic:
                 if os.path.exists(infected_folder_path):
                     self.subprocess_run(['attrib', '-r', infected_folder_path, '/d', '/s'])
                     result_repair_infected_folder = self.subprocess_run(
-                        ['attrib', '-s', '-h', '-r', infected_folder_path, '/d']).returncode
+                        ['attrib', '-s', '-h', infected_folder_path, '/d']).returncode
 
                     if result_repair_infected_folder == 0:
                         self.logger.info(
