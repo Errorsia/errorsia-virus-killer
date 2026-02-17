@@ -34,8 +34,6 @@ class MainWindow(QMainWindow):
 
     def initialization_window(self):
         self.setWindowTitle(self.evk_build_ver_config.FULL_VERSION)
-        # self.setMinimumSize(1360, 720)
-        # self.resize(1360, 720)
         self.setMinimumSize(960, 540)
         self.resize(960, 540)
         # self.setMaximumSize(3840, 2160)
