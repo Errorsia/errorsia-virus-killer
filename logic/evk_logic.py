@@ -125,12 +125,13 @@ class ErrorsiaVirusKillerLogic:
         self.logger = logging.getLogger(__name__)
         # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
         self.handler = logging.FileHandler(
-            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv1'),
+            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv2'),
             encoding='utf=8'
         )
 
         self.formatter = logging.Formatter(
-            '%(asctime)s - %(pathname)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s')
+            '%(asctime)s - %(created)f - %(relativeCreated)d - %(process)d - %(processName)s - %(thread)s - %(threadName)s - %(pathname)s- %(name)s - %(module)s - %(funcName)s - %(levelname)s - %(levelno)s - %(message)s'
+        )
 
         match self.runtime_config_object.read_condition:
             case RuntimeFunctionStatus.WARNING:
