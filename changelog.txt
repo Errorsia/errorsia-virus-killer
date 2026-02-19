@@ -1,2 +1,2 @@
-将subprocess.call替换为subprocess.run
-修改了部分重复逻辑
+增加的日志记录的内容
+更改了日志测试文件名称
