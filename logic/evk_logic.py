@@ -41,6 +41,7 @@ class ErrorsiaVirusKillerLogic:
         self.build_Log = None
         self.gui = None
         self.evk_build_ver_config = evk_build_ver_config
+        self.initialization_file_io_condition = True
         self.logger = self.formatter = self.handler = None
 
         self.runtime_config_object = self.runtime_config = None
@@ -56,7 +57,6 @@ class ErrorsiaVirusKillerLogic:
 
     def initialization(self):
         self.check_operate_system()
-
 
         # print(self.subprocess_run(['chcp']))
         self.subprocess_run(['chcp', '65001'])
@@ -110,11 +110,6 @@ class ErrorsiaVirusKillerLogic:
         for tmp_option_name in option_name:
             self.runtime_config.setdefault(tmp_option_name, {})
 
-    # @staticmethod
-    # def run_command(command):
-    #     return subprocess.call(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-    #                            stderr=subprocess.PIPE)
-
     @staticmethod
     def subprocess_run(command):
         return subprocess.run(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -125,12 +120,26 @@ class ErrorsiaVirusKillerLogic:
         self.logger = logging.getLogger(__name__)
         # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
         self.handler = logging.FileHandler(
-            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv2'),
+            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv3'),
             encoding='utf=8'
         )
 
         self.formatter = logging.Formatter(
-            '%(asctime)s - %(created)f - %(relativeCreated)d - %(process)d - %(processName)s - %(thread)s - %(threadName)s - %(pathname)s- %(name)s - %(module)s - %(funcName)s - %(levelname)s - %(levelno)s - %(message)s'
+            '%(asctime)s | '
+            '[%(levelname)s] | '
+            '%(name)s.%(module)s.%(funcName)s | '
+            '%(pathname)s | '
+            'PID=%(process)d/%(processName)s | '
+            # 'TID=%(thread)d/%(threadName)s | '
+            'TID=%(thread)s/%(threadName)s | '
+            'created=%(created)f | '
+            'rel=%(relativeCreated)d | '
+            'levelno=%(levelno)s | '
+            '%(message)s'
+            # Old
+            # '%(asctime)s - %(created)f - %(relativeCreated)d - %(process)d - %(processName)s -
+            # %(thread)s - %(threadName)s - %(pathname)s- %(name)s - %(module)s - %(funcName)s -
+            # %(levelname)s - %(levelno)s - %(message)s'
         )
 
         match self.runtime_config_object.read_condition:
@@ -271,7 +280,7 @@ class ErrorsiaVirusKillerLogic:
                 drive_path = f"{chr(65 + i)}:\\"
                 drive_type = win32file.GetDriveType(drive_path)
 
-                if drive_type == win32file.DRIVE_REMOVABLE: # DRIVE_REMOVABLE = 2
+                if drive_type == win32file.DRIVE_REMOVABLE:  # DRIVE_REMOVABLE = 2
                     drives.append(drive_letter)
         return drives
 
@@ -307,7 +316,8 @@ class ErrorsiaVirusKillerLogic:
         elif taskkill_returncode == 1:
             condition = 'failed'
             output_content = 'The process could not be terminated'
-            self.logger.warning(f'The process ({process_name}) could not be terminated (Return code {taskkill_returncode})')
+            self.logger.warning(
+                f'The process ({process_name}) could not be terminated (Return code {taskkill_returncode})')
 
         else:
             condition = 'failed'
@@ -388,7 +398,8 @@ class ErrorsiaVirusKillerLogic:
 
                     if result_repair_infected_folder == 0:
                         self.logger.info(
-                            f'The attribute of the Infected folder in {disk}-disk has been changed (Return code {result_repair_infected_folder})')
+                            f'The attribute of the Infected folder in {disk}-disk has been changed '
+                            f'(Return code {result_repair_infected_folder})')
                         condition_list.append('success')
                         log_content_list.append(f'The attribute of the Infected folder in {disk}-disk was changed')
 
@@ -403,7 +414,8 @@ class ErrorsiaVirusKillerLogic:
 
                     if result_change_virus_files_attrib.returncode == 0:
                         self.logger.info(
-                            f'The attribute of the virus file ({disk}:\\xa0\\desktop.ini) has been changed (Return {result_change_virus_files_attrib})')
+                            f'The attribute of the virus file ({disk}:\\xa0\\desktop.ini) has been changed '
+                            f'(Return {result_change_virus_files_attrib})')
                         condition_list.append('success')
                         log_content_list.append(f'The attribute of the virus file in {disk}-disk was changed')
 
@@ -491,7 +503,6 @@ class ErrorsiaVirusKillerLogic:
 
             self.Easter_Egg_Index = 0
 
-
     # Get the value of the combobox automatically and set the level of the logger & file_handler
     # noinspection PyUnusedLocal
     def set_log_level(self, level_index):
@@ -506,7 +517,7 @@ class ErrorsiaVirusKillerLogic:
             logging.WARNING,
             logging.ERROR,
             logging.CRITICAL,
-            100 # SILENT
+            100  # SILENT
         ]
 
         self.handler.setLevel(logging_level[level_index])
@@ -550,7 +561,8 @@ class ErrorsiaVirusKillerRuntimeConfig:
         self.read_condition = None
         self.write_condition = None
         self.condition = False
-        self.config_path = os.path.join(self.file_directory, 'Config', 'ErrorsiaVirusKillerConfig.evk4configtestv1')  # evc
+        self.config_path = os.path.join(
+            self.file_directory, 'Config', 'ErrorsiaVirusKillerConfig.evk4configtestv1')  # evc
 
     def flush_condition(self):
         # self.condition = all(
@@ -561,8 +573,7 @@ class ErrorsiaVirusKillerRuntimeConfig:
         )
 
     @staticmethod
-    # Holy shit, why no warnings here
-    # 想不到这也可以传入一个self
+    # If not staticmethod, the first argument is self
     def all_success(*statuses):
         return all(s == RuntimeFunctionStatus.SUCCESS for s in statuses)
 
