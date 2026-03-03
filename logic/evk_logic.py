@@ -21,6 +21,7 @@
 Logic module for Errorsia virus killer
 """
 import logging
+from logging.handlers import MemoryHandler
 import os
 import subprocess
 import sys
@@ -41,8 +42,8 @@ class ErrorsiaVirusKillerLogic:
         self.build_Log = None
         self.gui = None
         self.evk_build_ver_config = evk_build_ver_config
-        self.initialization_file_io_condition = True
-        self.logger = self.formatter = self.handler = None
+        self.file_io_initialization_condition = True
+        self.logger = self.file_memory_handler = self.formatter = self.file_handler = None
 
         self.runtime_config_object = self.runtime_config = None
 
@@ -62,11 +63,13 @@ class ErrorsiaVirusKillerLogic:
         self.subprocess_run(['chcp', '65001'])
         # print(self.subprocess_run(['chcp']))
 
+        self.log_initialization()
+
         self.check_path()
 
         self.initialization_runtime_config()
 
-        self.log_initialization()
+        self.file_handler_and_formatter_initialization()
 
         self.check_update()
 
@@ -88,14 +91,20 @@ class ErrorsiaVirusKillerLogic:
         for dir_tmp in dir_list:
             dir_tmp = father_directory + dir_tmp
             if not os.path.exists(dir_tmp):
+                self.logger.warning(f'Path {dir_tmp} not found, try to create.')
                 os.mkdir(dir_tmp)
                 # try:
                 #     os.mkdir(dir_tmp)
                 #     raise PermissionError
                 # except PermissionError as err:
                 #     raise PermissionError(f'Cannot create Directory: {dir_tmp} | {err}')
+                self.logger.info(f'Path {dir_tmp} was created.')
 
     def initialization_runtime_config(self):
+        print(self.logger, self.logger.level, self.file_memory_handler.level)
+        print(self.logger.handlers)
+        self.logger.info('Loading runtime config')
+        print(903840)
         self.runtime_config_object = ErrorsiaVirusKillerRuntimeConfig(self.file_directory)
         self.runtime_config_object.read_and_analysis_config()
         self.runtime_config = self.runtime_config_object.runtime_config_dict
@@ -116,13 +125,14 @@ class ErrorsiaVirusKillerLogic:
                               stderr=subprocess.PIPE)
 
     def log_initialization(self):
-        # Set logger and file file_handler
+        # Set logger and a buffer handler for file handler
+
+        # May cause unexpected bugs
+        # Create root logger
+        # self.logger = logging.getLogger()
+
         self.logger = logging.getLogger(__name__)
-        # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
-        self.handler = logging.FileHandler(
-            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv3'),
-            encoding='utf=8'
-        )
+        self.logger.setLevel(logging.DEBUG)
 
         self.formatter = logging.Formatter(
             '%(asctime)s | '
@@ -142,6 +152,13 @@ class ErrorsiaVirusKillerLogic:
             # %(levelname)s - %(levelno)s - %(message)s'
         )
 
+        # Create a memory handler, a buffer handler for file handler
+        self.file_memory_handler = MemoryHandler(capacity=8192, flushLevel=100)
+        # self.file_memory_handler.addFormatter()
+        self.logger.addHandler(self.file_memory_handler)
+
+
+    def file_handler_and_formatter_initialization(self):
         match self.runtime_config_object.read_condition:
             case RuntimeFunctionStatus.WARNING:
                 build_log = False
@@ -170,7 +187,22 @@ class ErrorsiaVirusKillerLogic:
 
         self.build_Log = build_log
 
+        # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
+        self.file_handler = logging.FileHandler(
+            os.path.join(self.file_directory, 'Log', 'errorsia_virus_killer_log.evk4logtestv3'),
+            encoding='utf=8'
+        )
+
+        # Because of the sequence of creating handler and set level, there may be bugs here
         self.initialization_logger_level(build_log)
+
+        if self.build_Log:
+            self.file_memory_handler.setTarget(self.file_handler)
+
+        self.file_memory_handler.flush()
+
+        # Remove memory handler
+        self.logger.removeHandler(self.file_memory_handler)
 
     def set_log_dict(self):
         # Create log dict
@@ -189,14 +221,14 @@ class ErrorsiaVirusKillerLogic:
 
     def initialization_logger_level(self, build_log):
         if build_log:
-            self.handler.setLevel(logging.DEBUG)
+            self.file_handler.setLevel(logging.DEBUG)
             self.logger.setLevel(level=logging.DEBUG)
         else:
-            self.handler.setLevel(100)
+            self.file_handler.setLevel(100)
             self.logger.setLevel(100)
 
-        self.handler.setFormatter(self.formatter)
-        self.logger.addHandler(self.handler)
+        self.file_handler.setFormatter(self.formatter)
+        self.logger.addHandler(self.file_handler)
 
     # Check for updates
     def check_update(self):
@@ -508,7 +540,7 @@ class ErrorsiaVirusKillerLogic:
     def set_log_level(self, level_index):
         if level_index > 5 or level_index < 0:
             # This won't happen, I think.
-            self.handler.setLevel(logging.INFO)
+            self.file_handler.setLevel(logging.INFO)
             self.logger.setLevel(level=logging.INFO)
 
         logging_level = [
@@ -520,7 +552,7 @@ class ErrorsiaVirusKillerLogic:
             100  # SILENT
         ]
 
-        self.handler.setLevel(logging_level[level_index])
+        self.file_handler.setLevel(logging_level[level_index])
         self.logger.setLevel(level=logging_level[level_index])
 
         self.logger.info(f'Log index set to {level_index}')
