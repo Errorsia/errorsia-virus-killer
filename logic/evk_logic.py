@@ -43,7 +43,7 @@ class ErrorsiaVirusKillerLogic:
         self.gui = None
         self.evk_build_ver_config = evk_build_ver_config
         self.file_io_initialization_condition = True
-        self.logger = self.file_memory_handler = self.formatter = self.file_handler = None
+        self.logger = self.file_memory_handler = self.file_formatter = self.file_handler = None
 
         self.runtime_config_object = self.runtime_config = None
 
@@ -57,13 +57,13 @@ class ErrorsiaVirusKillerLogic:
         self.Easter_Egg_Index = 0
 
     def initialization(self):
+        self.log_initialization()
+
         self.check_operate_system()
 
         # print(self.subprocess_run(['chcp']))
         self.subprocess_run(['chcp', '65001'])
         # print(self.subprocess_run(['chcp']))
-
-        self.log_initialization()
 
         self.check_path()
 
@@ -78,10 +78,13 @@ class ErrorsiaVirusKillerLogic:
         self.logger.info('Successfully initialized logic module')
 
     # Check whether OS is Windows nt
-    @staticmethod
-    def check_operate_system():
+    # @staticmethod
+    def check_operate_system(self):
         if os.name != 'nt':
+            self.logger.fatal('UNSUPPORTED SYSTEMS')
             sys.exit('UNSUPPORTED SYSTEMS')
+        else:
+            self.logger.info('Check os passed')
 
     # Check the working directories
     def check_path(self):
