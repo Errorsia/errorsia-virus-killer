@@ -138,25 +138,7 @@ class ErrorsiaVirusKillerLogic:
         self.logger = logging.getLogger('evk.main')
         self.logger.setLevel(logging.DEBUG)
 
-        self.formatter = logging.Formatter(
-            '%(asctime)s | '
-            '[%(levelname)s] | '
-            '%(name)s.%(module)s.%(funcName)s | '
-            '%(pathname)s | '
-            'PID=%(process)d/%(processName)s | '
-            # 'TID=%(thread)d/%(threadName)s | '
-            'TID=%(thread)s/%(threadName)s | '
-            'created=%(created)f | '
-            'rel=%(relativeCreated)d | '
-            'levelno=%(levelno)s | '
-            '%(message)s'
-            # Old
-            # '%(asctime)s - %(created)f - %(relativeCreated)d - %(process)d - %(processName)s -
-            # %(thread)s - %(threadName)s - %(pathname)s- %(name)s - %(module)s - %(funcName)s -
-            # %(levelname)s - %(levelno)s - %(message)s'
-        )
-
-        # Create a memory handler, a buffer handler for file handler
+        # Create a memory handler, which is a buffer handler for file handler
         self.file_memory_handler = MemoryHandler(capacity=8192, flushLevel=100)
         # self.file_memory_handler.addFormatter()
         self.logger.addHandler(self.file_memory_handler)
@@ -190,6 +172,24 @@ class ErrorsiaVirusKillerLogic:
                 build_log = False
 
         self.build_Log = build_log
+
+        self.file_formatter = logging.Formatter(
+            '%(asctime)s | '
+            '[%(levelname)s] | '
+            '%(name)s.%(module)s.%(funcName)s | '
+            '%(pathname)s | '
+            'PID=%(process)d/%(processName)s | '
+            # 'TID=%(thread)d/%(threadName)s | '
+            'TID=%(thread)s/%(threadName)s | '
+            'created=%(created)f | '
+            'rel=%(relativeCreated)d | '
+            'levelno=%(levelno)s | '
+            '%(message)s'
+            # Old
+            # '%(asctime)s - %(created)f - %(relativeCreated)d - %(process)d - %(processName)s -
+            # %(thread)s - %(threadName)s - %(pathname)s- %(name)s - %(module)s - %(funcName)s -
+            # %(levelname)s - %(levelno)s - %(message)s'
+        )
 
         # self.file_handler = logging.FileHandler(f'{self.file_directory}/Log/Log_{time.time():.7f}.evc')
         self.file_handler = logging.FileHandler(
@@ -225,13 +225,13 @@ class ErrorsiaVirusKillerLogic:
 
     def initialization_logger_level(self, build_log):
         if build_log:
-            self.file_handler.setLevel(logging.DEBUG)
+            # self.file_handler.setLevel(logging.DEBUG)
             self.logger.setLevel(level=logging.DEBUG)
         else:
-            self.file_handler.setLevel(100)
+            # self.file_handler.setLevel(100)
             self.logger.setLevel(100)
 
-        self.file_handler.setFormatter(self.formatter)
+        self.file_handler.setFormatter(self.file_formatter)
         self.logger.addHandler(self.file_handler)
 
     # Check for updates
@@ -544,7 +544,7 @@ class ErrorsiaVirusKillerLogic:
     def set_log_level(self, level_index):
         if level_index > 5 or level_index < 0:
             # This won't happen, I think.
-            self.file_handler.setLevel(logging.INFO)
+            # self.file_handler.setLevel(logging.INFO)
             self.logger.setLevel(level=logging.INFO)
 
         logging_level = [
@@ -556,7 +556,7 @@ class ErrorsiaVirusKillerLogic:
             100  # SILENT
         ]
 
-        self.file_handler.setLevel(logging_level[level_index])
+        # self.file_handler.setLevel(logging_level[level_index])
         self.logger.setLevel(level=logging_level[level_index])
 
         self.logger.info(f'Log index set to {level_index}')
