@@ -55,6 +55,7 @@ class ErrorsiaVirusKillerApp:
         self.logger = self.logic.logger
 
         self.app = QApplication(sys.argv)
+        print(self.app.style().objectName())
         self.user_interface = MainWindow(evk_build_ver_config ,self.logger, self.logic)
 
         self.logger.info('Successfully initialized gui module')
