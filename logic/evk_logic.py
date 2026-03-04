@@ -95,19 +95,20 @@ class ErrorsiaVirusKillerLogic:
             dir_tmp = father_directory + dir_tmp
             if not os.path.exists(dir_tmp):
                 self.logger.warning(f'Path {dir_tmp} not found, try to create.')
-                os.mkdir(dir_tmp)
-                # try:
-                #     os.mkdir(dir_tmp)
-                #     raise PermissionError
-                # except PermissionError as err:
-                #     raise PermissionError(f'Cannot create Directory: {dir_tmp} | {err}')
-                self.logger.info(f'Path {dir_tmp} was created.')
+                # os.mkdir(dir_tmp)
+                try:
+                    os.mkdir(dir_tmp)
+                    self.logger.info(f'Path {dir_tmp} was created.')
+                    # raise PermissionError
+                except PermissionError as err:
+                    # If there is only file handler, logger will have nothing to do with.
+                    self.logger.error(f'Cannot create Directory: {dir_tmp} | {err}')
+                    # initialization condition should be modified here
 
     def initialization_runtime_config(self):
         print(self.logger, self.logger.level, self.file_memory_handler.level)
         print(self.logger.handlers)
         self.logger.info('Loading runtime config')
-        print(903840)
         self.runtime_config_object = ErrorsiaVirusKillerRuntimeConfig(self.file_directory)
         self.runtime_config_object.read_and_analysis_config()
         self.runtime_config = self.runtime_config_object.runtime_config_dict
@@ -134,7 +135,7 @@ class ErrorsiaVirusKillerLogic:
         # Create root logger
         # self.logger = logging.getLogger()
 
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger('evk.main')
         self.logger.setLevel(logging.DEBUG)
 
         self.formatter = logging.Formatter(
