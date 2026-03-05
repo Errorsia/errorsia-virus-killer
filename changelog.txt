@@ -1,3 +1,4 @@
-调换了处理日志配置问题件和创建file handler的顺序
-新加入Memory Handler, 用于缓存File handler未创建时的日志
+更改了日志创建的位置, 有利于记录全部日志
+删除了file handler的等级设置, 避免重复, 后续如果出现多个handler考虑加回
 初始化阶段部分加入了日志
+部分增加了try-except结构, 增加了代码的健壮性
