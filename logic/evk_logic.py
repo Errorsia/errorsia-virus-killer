@@ -86,22 +86,43 @@ class ErrorsiaVirusKillerLogic:
 
     # Check the working directories
     def check_path(self):
-        father_directory = self.appdata + '/Errorsia'
-        dir_list = ['', '/VirusKiller', '/VirusKiller/Config', '/VirusKiller/Log']
+        # father_directory = self.appdata + '/Errorsia'
+        # dir_list = ['', '/VirusKiller', '/VirusKiller/Config', '/VirusKiller/Log']
+        #
+        # for dir_tmp in dir_list:
+        #     dir_tmp = father_directory + dir_tmp
+        #     if not os.path.exists(dir_tmp):
+        #         self.logger.warning(f'Path {dir_tmp} not found, try to create.')
+        #         # os.mkdir(dir_tmp)
+        #         try:
+        #             os.mkdir(dir_tmp)
+        #             self.logger.info(f'Path {dir_tmp} was created.')
+        #             # raise PermissionError
+        #         except PermissionError as err:
+        #             # If there is only file handler, logger will have nothing to do with.
+        #             self.logger.error(f'Cannot create Directory: {dir_tmp} | {err}')
+        #             # initialization condition should be modified here
 
-        for dir_tmp in dir_list:
-            dir_tmp = father_directory + dir_tmp
-            if not os.path.exists(dir_tmp):
-                self.logger.warning(f'Path {dir_tmp} not found, try to create.')
-                # os.mkdir(dir_tmp)
-                try:
-                    os.mkdir(dir_tmp)
-                    self.logger.info(f'Path {dir_tmp} was created.')
-                    # raise PermissionError
-                except PermissionError as err:
-                    # If there is only file handler, logger will have nothing to do with.
-                    self.logger.error(f'Cannot create Directory: {dir_tmp} | {err}')
-                    # initialization condition should be modified here
+        working_dir_list = ['Config', 'Log']
+        for dir_tmp in working_dir_list:
+            current_checked_dir = os.path.join(self.file_directory, dir_tmp)
+            try:
+                os.makedirs(current_checked_dir, exist_ok=True)
+                self.logger.info(f"Directory ready: {dir_tmp}")
+            except PermissionError as err:
+                # initialization condition should be modified here
+                # If there is only file handler, logger will have nothing to do with.
+                self.logger.error(f"Cannot create directory: {dir_tmp} | {err}")
+
+            # if os.path.exists(dir_tmp):
+            #     self.logger.info(f"Directory already exists: {dir_tmp}")
+            # else:
+            #     try:
+            #         os.makedirs(dir_tmp)
+            #         self.logger.info(f"Directory created: {dir_tmp}")
+            #     except PermissionError as err:
+            #         self.logger.error(f"Cannot create directory: {dir_tmp} | {err}")
+
 
     def initialization_runtime_config(self):
         self.logger.info('Loading runtime config')
