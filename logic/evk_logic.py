@@ -61,9 +61,7 @@ class ErrorsiaVirusKillerLogic:
 
         self.check_operate_system()
 
-        # print(self.subprocess_run(['chcp']))
         self.subprocess_run(['chcp', '65001'])
-        # print(self.subprocess_run(['chcp']))
 
         self.check_path()
 
@@ -106,13 +104,11 @@ class ErrorsiaVirusKillerLogic:
                     # initialization condition should be modified here
 
     def initialization_runtime_config(self):
-        print(self.logger, self.logger.level, self.file_memory_handler.level)
-        print(self.logger.handlers)
         self.logger.info('Loading runtime config')
         self.runtime_config_object = ErrorsiaVirusKillerRuntimeConfig(self.file_directory)
         self.runtime_config_object.read_and_analysis_config()
         self.runtime_config = self.runtime_config_object.runtime_config_dict
-        # print(self.runtime_config)
+        self.logger.info('Runtime config loaded')
         self.set_default_config_value()
 
     def set_default_config_value(self):
