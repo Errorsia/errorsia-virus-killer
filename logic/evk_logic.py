@@ -39,14 +39,15 @@ import win32file
 import evk_build_config as evk_build_ver_config
 
 class ErrorsiaVirusKillerLogic:
-    def __init__(self, evk_build_ver_config):
+    def __init__(self, gui):
         self.build_Log = None
-        self.gui = None
-        self.evk_build_ver_config = evk_build_ver_config
-        self.file_io_initialization_condition = True
-        self.logger = self.file_memory_handler = self.file_formatter = self.file_handler = None
+        self.formatter = None
+        self.gui = gui
+        self.logging = self.logger = self.handler = None
 
         self.runtime_config_object = self.runtime_config = None
+
+        self.disable_debug_frame = True
 
         # Get the value of the environment variable %appdata%
         self.appdata = os.getenv("APPDATA")
@@ -55,7 +56,7 @@ class ErrorsiaVirusKillerLogic:
 
         # Whether show Easter Egg
         # Current condition: On (If Easter_Egg_Index < 0, it's Off)
-        self.Easter_Egg_Index = 0
+        self.Easter_Egg = 0
 
     def initialization(self):
         self.log_initialization()
