@@ -21,7 +21,6 @@
 Logic module for Errorsia virus killer
 """
 import logging
-from logging.handlers import MemoryHandler
 import os
 import subprocess
 import sys
@@ -36,6 +35,8 @@ import tomli_w
 import win32api
 import win32file
 
+# Mudules
+import evk_build_config as evk_build_ver_config
 
 class ErrorsiaVirusKillerLogic:
     def __init__(self, evk_build_ver_config):
