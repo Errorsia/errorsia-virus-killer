@@ -59,17 +59,15 @@ class ErrorsiaVirusKillerLogic:
         self.Easter_Egg = 0
 
     def initialization(self):
-        self.log_initialization()
-
         self.check_operate_system()
 
-        self.subprocess_run(['chcp', '65001'])
+        self.run_command('chcp 65001')
 
         self.check_path()
 
         self.initialization_runtime_config()
 
-        self.file_handler_and_formatter_initialization()
+        self.log_initialization()
 
         self.check_update()
 
