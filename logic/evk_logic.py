@@ -76,13 +76,10 @@ class ErrorsiaVirusKillerLogic:
         self.logger.info('Successfully initialized logic module')
 
     # Check whether OS is Windows nt
-    # @staticmethod
-    def check_operate_system(self):
+    @staticmethod
+    def check_operate_system():
         if os.name != 'nt':
-            self.logger.fatal('UNSUPPORTED SYSTEMS')
             sys.exit('UNSUPPORTED SYSTEMS')
-        else:
-            self.logger.info('Check os passed')
 
     # Check the working directories
     def check_path(self):
